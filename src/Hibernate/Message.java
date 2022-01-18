@@ -1,6 +1,8 @@
 package Hibernate;
 
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,39 @@ public class Message {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private Utilisateur u;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Lien> Liste_Lien;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Mot_Cle> Liste_Mot_Cle;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Image> Liste_Image; 
+	
+	public List<Lien> getListe_Lien() {
+		return Liste_Lien;
+	}
+
+	public void setListe_Lien(List<Lien> liste_Lien) {
+		Liste_Lien = liste_Lien;
+	}
+
+	public List<Mot_Cle> getListe_Mot_Cle() {
+		return Liste_Mot_Cle;
+	}
+
+	public void setListe_Mot_Cle(List<Mot_Cle> liste_Mot_Cle) {
+		Liste_Mot_Cle = liste_Mot_Cle;
+	}
+
+	public List<Image> getListe_Image() {
+		return Liste_Image;
+	}
+
+	public void setListe_Image(List<Image> liste_Image) {
+		Liste_Image = liste_Image;
+	}
 
 	public int getId() {
 		return id;
