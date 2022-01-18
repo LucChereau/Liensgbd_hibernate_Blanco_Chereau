@@ -15,7 +15,7 @@ public class Adresse {
 	private String PostalCode;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	private Utilisateur p;
+	private Utilisateur u;
 
 	public int getId() {
 		return id;
@@ -58,10 +58,10 @@ public class Adresse {
 	}
 
 	public Utilisateur getP() {
-		return p;
+		return u;
 	}
 
-	public void setP(Utilisateur p) {
-		this.p = p;
+	public void setP(Utilisateur u) {
+		this.u = u;
 	}
 }
