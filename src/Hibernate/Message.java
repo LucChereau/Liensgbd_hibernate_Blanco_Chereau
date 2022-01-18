@@ -18,13 +18,13 @@ public class Message {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Utilisateur u;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="m", cascade = CascadeType.ALL)
 	private List<Lien> Liste_Lien;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="m",cascade = CascadeType.ALL)
 	private List<Mot_Cle> Liste_Mot_Cle;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="m",cascade = CascadeType.ALL)
 	private List<Image> Liste_Image; 
 	
 	public List<Lien> getListe_Lien() {
