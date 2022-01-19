@@ -1,5 +1,6 @@
 package Hibernate;
 
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -179,7 +180,7 @@ public class Menu {
 			}
 		}
 		
-		MessageDAO.Supprimer_Message(em, message);
+		MessageDAO.Supprimer_Message(em, message, utilisateur);
 		System.out.println("Votre message à bien été supprimé");
 	}
 	
@@ -189,7 +190,73 @@ public class Menu {
 	 * @param utilisateur
 	 */
 	public static void Menu_Modifier_Message(EntityManager em, Utilisateur utilisateur) {
+		boolean verif = false;
+		String titre;
+		Message message;
+		System.out.println("Veuillez saisir le titre du message que vous voulez modifier :"); 
+		titre=scanner.nextLine(); 
 		
+		message = MessageDAO.GetMessage_from_title(em, titre);
+		
+		while(verif == false) {
+			if (message == null) {
+				System.out.println("Aucun de vos messages ne possède ce titre, veuillez saisir un titre valide :"); 
+				titre=scanner.nextLine(); 
+				
+				message = MessageDAO.GetMessage_from_title(em, titre);
+			} else {
+				verif = true;
+			}
+		}
+		Scanner scan_boucle = new Scanner(System .in );
+		System.out.println("Voulez-vous modifier le message ?");
+		while(scanner.nextLine().matches("oui")) {
+			System.out.println("-------------------------------"); 
+			System.out.println("1. Modifier le Titre"); 
+			System.out.println("2. Modifier le corps du message"); 
+			System.out.println("3.Modifier les liens"); 
+			System.out.println("4.Modifier les Images"); 
+			System.out.println("5.Modifier les Mots_clés"); 
+			System.out.println("-------------------------------"); 
+			int choix=scanner.nextInt(); 
+			   switch(choix){
+			   
+		       case 1: 
+		           System.out.println("Saisir le nouveau Titre");
+		           String titre_modif=scanner.nextLine(); 
+		           MessageDAO.Modifier_Titre_Message(em, message, utilisateur, titre_modif);
+		           System.out.println("Le titre a été modifié"); 
+		           break;
+		   
+		       case 2:
+		    	   System.out.println("Saisir le nouveau corps du message");
+		           /*String corps=scanner2.nextLine(); 
+		           String SQL_modif_corps="UPDATE Message SET Texte='"+corps+"' WHERE Id_Message="+id_message; 
+		           
+		           stmt.execute(SQL_modif_corps); 
+		           System.out.println("Le corps du message a été modifié");*/
+		           break;
+		   
+		       case 3:
+		    	   		/*Lien.modify_lien(id_message); */
+		    	   		break; 
+		           
+		       case 4: 
+		           		//Image.modify_image(id_message); 
+		           		break;
+		   
+		       case 5:
+		    	   		//Mot_Cle.modify_key_word(id_message); 
+		    	   		break;
+		           
+		       default:
+		           		System.out.println("Choix incorrect");
+		           		break;
+		   }
+			   System.out.println("Souhaitez vous continuer a modifier le message ? ");
+		}
+		
+		System.out.println("Votre message à bien été modifié");
 	}
 	
 	/**
