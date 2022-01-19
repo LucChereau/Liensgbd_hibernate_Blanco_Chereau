@@ -42,11 +42,10 @@ public class UtilisateurDAO {
 		return result;
 	}
 	
-	public static Utilisateur get_Utilisateur(EntityManager em, String mail, String mdp) {
-		String hql = "from Utilisateur u where u.mail = :mail AND u.mot_de_passe = :mdp";
+	public static Utilisateur get_Utilisateur(EntityManager em, String mail) {
+		String hql = "from Utilisateur u where u.mail = :mail";
 		Query q = em.createQuery(hql);
 		q.setParameter("mail", mail);
-		q.setParameter("mot_de_passe", mdp);
 		List<Utilisateur> result = q.getResultList(); 
 		return result.get(0);
 	}
