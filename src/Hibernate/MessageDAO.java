@@ -28,8 +28,13 @@ public class MessageDAO {
 	public static void Supprimer_Message(EntityManager em ,Message m,Utilisateur u) {
 		
 		if(Verify_Message_From_Utilisateur(m,u)==true) {
+			em.getTransaction().begin();
 			em.persist(m);
-			em.remove(m);
+			String hql="delete from Message where id = :id"; 
+			Query q=em.createQuery(hql); 
+			q.setParameter("id", m.getId()); 
+			q.executeUpdate();
+			em.getTransaction().commit();
 		}
 	}
 	
@@ -48,11 +53,14 @@ public class MessageDAO {
 	
 	public static void Modifier_Titre_Message(EntityManager em,Message m, Utilisateur u, String new_Titre) {
 		if(Verify_Message_From_Utilisateur(m,u)==true) {
+			em.getTransaction().begin();
+			em.persist(m);
 			m.setTitre(new_Titre);
-			String hql="Update Message SET titre =:titre"; 
+			String hql="Update Message SET titre =:titre'"; 
 			Query q=em.createQuery(hql); 
 			q.setParameter("titre", m.getTitre()); 
 			q.executeUpdate();
+			em.getTransaction().commit();
 		}
 	}
 	
