@@ -16,6 +16,14 @@ public class Utilisateur {
 	@OneToOne(mappedBy="u", cascade=CascadeType.ALL)
 	private Adresse a;
 
+	public Utilisateur(String nom, String prenom, String mail, String mot_de_passe,Adresse a) {
+		this.nom=nom; 
+		this.prenom=prenom; 
+		this.mail=mail; 
+		this.mot_de_passe=mot_de_passe; 
+		this.a=a; 
+		
+	}
 	public int getId() {
 		return id;
 	}
