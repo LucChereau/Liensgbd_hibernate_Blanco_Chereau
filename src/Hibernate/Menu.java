@@ -1,19 +1,23 @@
 package Hibernate;
 
-import java.io.FileNotFoundException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import javax.persistence.EntityManager;
 
-
-
+/**
+ * 
+ * Classe permettant de gerer tout les menus de l'application
+ *
+ */
 public class Menu {
 	public static Scanner scanner=new Scanner(System .in );
 	
+	/**
+	 * Methode s'occupant du menu principal de l'application
+	 * @param em
+	 */
 	public static void Menu_Principal(EntityManager em){
 		boolean menu_principal = false;
 		Scanner scan2=new Scanner(System .in);
@@ -23,6 +27,7 @@ public class Menu {
 			String creer_compte=scanner.nextLine();
 			if(creer_compte.matches("oui")) {
 				Menu_Create_Utilisateur(em);
+				System.out.println("Votre compte à bien été créé !");
 			}
 			
 			System.out.println("Votre mail :");
@@ -62,7 +67,7 @@ public class Menu {
 			exist = UtilisateurDAO.Compare_Mdp(em, utilisateur, mot_de_passe);
 		}
 		
-		int id_utilisateur = utilisateur.getId();
+		System.out.println("Vous êtes à présent connecté !");
 		
 		Scanner scanner_boucle=new Scanner(System .in);
 		System.out.println("Souhaitez-vous allez dans le menu ?");
@@ -77,16 +82,16 @@ public class Menu {
 			int choix = scanner_boucle.nextInt();
 			switch(choix) {
 			case 1:
-				Menu_Create_Message(em);
+				Menu_Create_Message(em, utilisateur);
 				break;
 			case 2:
-				Menu_Supprimer_Message(em);
+				Menu_Supprimer_Message(em, utilisateur);
 				break;
 			case 3:
-				Menu_Modifier_Message(em);
+				Menu_Modifier_Message(em, utilisateur);
 				break;
 			case 4:
-				Affichage();
+				Affichage(em, utilisateur);
 				break;
 			default:
 				System.out.println("Choix incorrect");
@@ -96,6 +101,10 @@ public class Menu {
 		}
 	}
 	
+	/**
+	 * Methode permettant la gestion du sous menu de creation d'utilisateur
+	 * @param em
+	 */
 	public static void Menu_Create_Utilisateur(EntityManager em) {
 		String nom;
 		String prenom;
@@ -127,19 +136,68 @@ public class Menu {
 		UtilisateurDAO.Create_Utilisateur(em, nom, prenom, mail, mot_de_passe, city);
 	}
 	
-	public static void Menu_Create_Message(EntityManager em) {
+	/**
+	 * Methode permettant la gestion du sous menu de creation de message
+	 * @param em
+	 * @param utilisateur
+	 */
+	public static void Menu_Create_Message(EntityManager em, Utilisateur utilisateur) {
+		String titre;
+		String texte;
+		java.sql.Date date=java.sql.Date.valueOf(LocalDate.now()); 
+		System.out.println("Veuillez saisir le titre de votre message "); 
+		titre=scanner.nextLine(); 
+		System.out.println("Veuillez saisir le corps du message "); 
+		texte=scanner.nextLine(); 
+		
+		MessageDAO.Create_Message(em, utilisateur, titre, texte, date);
+		System.out.println("Votre message à bien été créé !"); 
+	}
+	
+	/**
+	 * Methode permettant la gestion du sous menu de suppression de message
+	 * @param em
+	 * @param utilisateur
+	 */
+	public static void Menu_Supprimer_Message(EntityManager em, Utilisateur utilisateur) {
+		boolean verif = false;
+		String titre;
+		Message message;
+		System.out.println("Veuillez saisir le titre du message que vous voulez supprimer :"); 
+		titre=scanner.nextLine(); 
+		
+		message = MessageDAO.GetMessage_from_title(em, titre);
+		
+		while(verif == false) {
+			if (message == null) {
+				System.out.println("Aucun de vos messages ne possède ce titre, veuillez saisir un titre valide :"); 
+				titre=scanner.nextLine(); 
+				
+				message = MessageDAO.GetMessage_from_title(em, titre);
+			} else {
+				verif = true;
+			}
+		}
+		
+		MessageDAO.Supprimer_Message(em, message);
+		System.out.println("Votre message à bien été supprimé");
+	}
+	
+	/**
+	 * Methode permettant la gestion du sous menu de modification de message
+	 * @param em
+	 * @param utilisateur
+	 */
+	public static void Menu_Modifier_Message(EntityManager em, Utilisateur utilisateur) {
 		
 	}
 	
-	public static void Menu_Supprimer_Message(EntityManager em) {
-		
-	}
-	
-	public static void Menu_Modifier_Message(EntityManager em) {
-		
-	}
-	
-	public static void Affichage() {
+	/**
+	 * Methode permettant la gestion du sous menu d'affichage des messages
+	 * @param em
+	 * @param utilisateur
+	 */
+	public static void Affichage(EntityManager em, Utilisateur utilisateur) {
 		
 	}
 }
