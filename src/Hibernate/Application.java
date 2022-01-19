@@ -8,5 +8,7 @@ public class Application {
 		EntityManager em = emf.createEntityManager();
 		
 		Menu.Menu_Principal(em);
+		em.close();
+		emf.close();
 	}
 }
