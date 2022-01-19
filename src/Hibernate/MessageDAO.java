@@ -28,10 +28,9 @@ public class MessageDAO {
 	public static void Supprimer_Message(EntityManager em ,Message m,Utilisateur u) {
 		
 		if(Verify_Message_From_Utilisateur(m,u)==true) {
-			String hql="delete from Message where id = :id"; 
-			Query q=em.createQuery(hql); 
-			q.setParameter("id", m.getId()); 
-			q.executeUpdate();
+			em.remove(m);
+			em.flush();
+		    em.clear();
 		}
 	}
 	

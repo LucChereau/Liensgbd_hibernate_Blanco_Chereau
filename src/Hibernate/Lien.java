@@ -10,6 +10,11 @@ public class Lien {
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Message m;
 	
+	public Lien() {
+		adresse_Lien=null; 
+		texte=null; 
+	}
+	
 	public Lien(String adresse_Lien, String texte, Message m) {
 		this.adresse_Lien=adresse_Lien; 
 		this.texte=texte; 
