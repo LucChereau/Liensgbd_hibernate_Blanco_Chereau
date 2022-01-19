@@ -9,6 +9,11 @@ public class Lien {
 	private String texte; 
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Message m;
+	
+	public Lien(String adresse_Lien, String texte, Message m) {
+		
+	}
+	
 	public int getId_lien() {
 		return id_lien;
 	}

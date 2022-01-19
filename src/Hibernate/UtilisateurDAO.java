@@ -21,7 +21,8 @@ public class UtilisateurDAO {
 		String hql = "from Utilisateur u where u.mail = :mail";
 		Query q = em.createQuery(hql);
 		q.setParameter("mail", mail);
-		List<Utilisateur> liste = q.getResultList();
+		List<Utilisateur> liste = new ArrayList<Utilisateur>(); 
+				liste=q.getResultList();
 		int size = liste.size();
 		if (size == 0) {
 			result = false;
