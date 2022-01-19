@@ -11,7 +11,9 @@ public class Lien {
 	private Message m;
 	
 	public Lien(String adresse_Lien, String texte, Message m) {
-		
+		this.adresse_Lien=adresse_Lien; 
+		this.texte=texte; 
+		this.m=m; 
 	}
 	
 	public int getId_lien() {
