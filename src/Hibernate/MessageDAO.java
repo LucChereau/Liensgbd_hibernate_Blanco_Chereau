@@ -11,8 +11,17 @@ public class MessageDAO {
 		em.getTransaction().commit();
 	}
 	
-	public static boolean Verify_title(EntityManager em, String titre, Utilisateur u) {
+	public static boolean Verify_title(EntityManager em, String titre) {
+		String hql = "from Message m where m.titre = :titre";
+		Query q = em.createQuery(hql);
+		q.setParameter("titre", titre);
+		List<Message> result = q.getResultList();
+		if(result.size()==0) {
 		return true; 
+		}
+		else {
+			return false; 
+		}
 	}
 	
 	public static boolean Verify_Message_From_Utilisateur(Message m,Utilisateur u) {
