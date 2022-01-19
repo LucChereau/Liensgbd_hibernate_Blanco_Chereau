@@ -1,5 +1,6 @@
 package Hibernate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -27,7 +28,7 @@ public class Utilisateur {
 		this.mail=mail; 
 		this.mot_de_passe=mot_de_passe; 
 		this.a=a; 
-		
+		this.Liste_Message=new ArrayList<Message>();
 	}
 	public int getId() {
 		return id;
@@ -41,6 +42,12 @@ public class Utilisateur {
 		return nom;
 	}
 
+	public List<Message> getListe_Message() {
+		return Liste_Message;
+	}
+	public void setListe_Message(List<Message> liste_Message) {
+		Liste_Message = liste_Message;
+	}
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
