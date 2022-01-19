@@ -9,4 +9,21 @@ public class LienDAO {
 		em.persist(l);
 		em.getTransaction().commit();
 	}
+	
+	public static void Verify_Lien_From_Message(EntityManager em,Lien l, Message m ) {
+		
+	}
+	
+	public static void Modify_Adresse_Lien() {
+		
+	}
+	
+	public static void Modify_Texte_Lien() {
+		
+	}
+	
+	public static void Supprimer_Lien() {
+		
+	}
+	
 }
