@@ -15,6 +15,12 @@ public class Message {
 	private String texte;
 	private Date date_de_post;
 	
+	public Message(String titre, String texte, Date date_de_poste) {
+		this.titre=titre; 
+		this.texte=texte; 
+		this.date_de_post=date_de_poste; 
+	}
+	
 	@OneToOne(cascade = CascadeType.ALL)
 	private Utilisateur u;
 	
