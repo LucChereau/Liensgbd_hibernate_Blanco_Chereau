@@ -28,6 +28,7 @@ public class MessageDAO {
 	public static void Supprimer_Message(EntityManager em ,Message m,Utilisateur u) {
 		
 		if(Verify_Message_From_Utilisateur(m,u)==true) {
+			em.persist(m);
 			em.remove(m);
 			em.flush();
 		    em.clear();
