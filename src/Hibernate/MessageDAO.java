@@ -50,9 +50,10 @@ public class MessageDAO {
 	public static void Modifier_Titre_Message(EntityManager em,Message m, Utilisateur u, String new_Titre) {
 		if(Verify_Message_From_Utilisateur(m,u)==true) {
 			m.setTitre(new_Titre);
-			em.createQuery("Update Message SET titre = ':titre'")
-			.setParameter("titre", m.getTitre())
-			.executeUpdate();
+			String hql="Update Message SET titre = ':titre'"; 
+			Query q=em.createQuery(hql); 
+			q.setParameter("titre", m.getTitre())
+			q.executeUpdate();
 		}
 	}
 	
