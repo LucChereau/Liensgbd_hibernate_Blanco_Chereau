@@ -28,9 +28,10 @@ public class MessageDAO {
 	public static void Supprimer_Message(EntityManager em ,Message m,Utilisateur u) {
 		
 		if(Verify_Message_From_Utilisateur(m,u)==true) {
-			em.createQuery("delete from Message where id = :id")
-			.setParameter("id", m.getId())
-			.executeUpdate();
+			String hql="delete from Message where id = :id"; 
+			Query q=em.createQuery(hql); 
+			q.setParameter("id", m.getId()); 
+			q.executeUpdate();
 		}
 	}
 	
@@ -52,7 +53,7 @@ public class MessageDAO {
 			m.setTitre(new_Titre);
 			String hql="Update Message SET titre = ':titre'"; 
 			Query q=em.createQuery(hql); 
-			q.setParameter("titre", m.getTitre())
+			q.setParameter("titre", m.getTitre()); 
 			q.executeUpdate();
 		}
 	}
