@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 public class Application {
 	public static void main(String[] args){
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("Test");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("test");
 		EntityManager em = emf.createEntityManager();
 		
 		Menu.Menu_Principal(em);
