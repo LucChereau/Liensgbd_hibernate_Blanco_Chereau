@@ -218,7 +218,7 @@ public class Menu {
 		}
 		Scanner scan_boucle = new Scanner(System .in );
 		System.out.println("Voulez-vous modifier le message ?");
-		while(scanner.nextLine().matches("oui")) {
+		while(scan_boucle.nextLine().matches("oui")) {
 			System.out.println("-------------------------------"); 
 			System.out.println("1. Modifier le Titre"); 
 			System.out.println("2. Modifier le corps du message"); 
@@ -231,8 +231,15 @@ public class Menu {
 			   
 		       case 1: 
 		           System.out.println("Saisir le nouveau Titre");
-		           scanner.nextLine();
-		           String titre_modif=scanner.nextLine(); 
+		           String titre_modif=scan_boucle.nextLine(); 
+		           boolean exist = false;
+			   		while(exist == false) {
+			   			exist = MessageDAO.Verify_title(em, titre);
+			   			if(exist == false) {
+			   				System.out.println("Le titre de votre message est déjà pris, veuillez en renseigner un nouveau :");
+			   				titre=scanner.nextLine(); 
+			   			}
+			   		}
 		           MessageDAO.Modifier_Titre_Message(em, message, utilisateur, titre_modif);
 		           System.out.println("Le titre a été modifié"); 
 		           break;
