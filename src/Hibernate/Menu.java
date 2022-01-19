@@ -149,13 +149,13 @@ public class Menu {
 		System.out.println("Veuillez saisir le titre de votre message "); 
 		titre=scanner.nextLine(); 
 		boolean exist = false;
-		while(exist == false) {
+		do  {
 			exist = MessageDAO.Verify_title(em, titre);
 			if(exist == false) {
 				System.out.println("Le titre de votre message est déjà pris, veuillez en renseigner un nouveau :");
 				titre=scanner.nextLine(); 
 			}
-		}
+		}while(exist == false); 
 		System.out.println("Veuillez saisir le corps du message "); 
 		texte=scanner.nextLine(); 
 		
@@ -234,10 +234,10 @@ public class Menu {
 		           String titre_modif=scan_boucle.nextLine(); 
 		           boolean exist = false;
 			   		while(exist == false) {
-			   			exist = MessageDAO.Verify_title(em, titre);
+			   			exist = MessageDAO.Verify_title(em, titre_modif);
 			   			if(exist == false) {
 			   				System.out.println("Le titre de votre message est déjà pris, veuillez en renseigner un nouveau :");
-			   				titre=scanner.nextLine(); 
+			   				titre_modif=scanner.nextLine(); 
 			   			}
 			   		}
 		           MessageDAO.Modifier_Titre_Message(em, message, utilisateur, titre_modif);
