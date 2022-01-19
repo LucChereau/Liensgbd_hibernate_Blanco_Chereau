@@ -6,52 +6,60 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
+import javax.persistence.EntityManager;
+
 
 
 public class Menu {
 	public static Scanner scanner=new Scanner(System .in );
 	
-	public static void Menu_Principal(){
+	public static void Menu_Principal(EntityManager em){
+		boolean menu_principal = false;
 		Scanner scan2=new Scanner(System .in);
-		System.out.println("Voulez-vous vous créer un compte ?");
-		String creer_compte=scanner.nextLine();
-		if(creer_compte.matches("oui")) {
-			UtilisateurDAO.Create_Utilisateur();
-		}
-		boolean exist = false;
-		while(exist == false) {
-			System.out.println("Votre mail :");
-			String mail_identification=scanner.nextLine();
+		String mail_identification;
+		while(menu_principal == false) {
+			System.out.println("Voulez-vous vous créer un compte ?");
+			String creer_compte=scanner.nextLine();
+			if(creer_compte.matches("oui")) {
+				UtilisateurDAO.Create_Utilisateur(em);
+			}
 			
-			exist = UtilisateurDAO.Recherche_Mail(mail_identification);
-			if(exist == false) {
+			System.out.println("Votre mail :");
+			mail_identification=scanner.nextLine();
+			menu_principal = UtilisateurDAO.Recherche_Mail(em, mail_identification);
+			if(menu_principal == false) {
 				System.out.println("Erreur sur votre mail, veuillez recommencer !");
 			}
 		}
 		
+		boolean exist = false;
+		
 		System.out.println("Votre mot de passe :");
 		String mot_de_passe=scan2.nextLine();
 		
+		exist = UtilisateurDAO.Compare_Mdp(em, mail_identification, mot_de_passe);
 		
-		while(sql_mdp.matches(mot_de_passe) != true) {
+		while(exist == false) {
 			System.out.println("Votre mot de passe n'est pas correct, veuillez saisir de nouveau vos données :");
 			
 			System.out.println("Votre mail :");
 			mail_identification=scanner.nextLine();
-			mail_identification = Recherche_mail(mail_identification);
-			rs_id_user = stmt.executeQuery("SELECT * FROM Utilisateur WHERE Mail = '"+mail_identification+"';");
-			rs_id_user.next();
-			id_utilisateur = rs_id_user.getInt(1);
-			sql_mdp = rs_id_user.getString(6);
+			while(exist == false) {
+				exist = UtilisateurDAO.Recherche_Mail(em, mail_identification);
+				if(exist == false) {
+					System.out.println("Erreur sur votre mail, veuillez recommencer !");
+				}
+			}
 			
-			System.out.println("Veuillez saisir votre mot de passe :");
-			mot_de_passe=scanner.nextLine();
-			rs_id_user = stmt.executeQuery("SELECT * FROM Utilisateur WHERE Id_Utilisateur = "+id_utilisateur+";");
-			rs_id_user.next();
-			id_utilisateur = rs_id_user.getInt(1);
-			sql_mdp = rs_id_user.getString(6);
+			System.out.println("Votre mot de passe :");
+			mot_de_passe=scan2.nextLine();
 			
+			exist = UtilisateurDAO.Compare_Mdp(em, mail_identification, mot_de_passe);
 		}
+		
+		Utilisateur utilisateur = UtilisateurDAO.get_Utilisateur(em, mail_identification, mot_de_passe);
+		
+		int id_utilisateur = utilisateur.getId();
 		
 		Scanner scanner_boucle=new Scanner(System .in);
 		System.out.println("Souhaitez-vous allez dans le menu ?");
@@ -66,7 +74,7 @@ public class Menu {
 			int choix = scanner_boucle.nextInt();
 			switch(choix) {
 			case 1:
-				Message.post_message(id_utilisateur);
+				MessageDAO.Create_Message(em);
 				break;
 			case 2:
 				Message.del_message(id_utilisateur);
