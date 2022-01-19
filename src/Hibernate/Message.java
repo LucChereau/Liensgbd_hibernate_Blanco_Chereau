@@ -1,5 +1,6 @@
 package Hibernate;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,14 @@ public class Message {
 	private String texte;
 	private Date date_de_post;
 	
-	
+	public Message() {
+		titre=null; 
+		texte=null; 
+		date_de_post=null; 
+		Liste_Lien=new ArrayList<Lien>(); 
+		Liste_Mot_Cle=new ArrayList<Mot_Cle>(); 
+		Liste_Image=new ArrayList<Image>(); 
+	}
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Utilisateur u;
