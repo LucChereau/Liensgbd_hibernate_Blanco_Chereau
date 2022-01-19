@@ -148,6 +148,14 @@ public class Menu {
 		java.sql.Date date=java.sql.Date.valueOf(LocalDate.now()); 
 		System.out.println("Veuillez saisir le titre de votre message "); 
 		titre=scanner.nextLine(); 
+		boolean exist = false;
+		while(exist == false) {
+			exist = MessageDAO.Verify_title(em, titre);
+			if(exist == false) {
+				System.out.println("Le titre de votre message est déjà pris, veuillez en renseigner un nouveau :");
+				titre=scanner.nextLine(); 
+			}
+		}
 		System.out.println("Veuillez saisir le corps du message "); 
 		texte=scanner.nextLine(); 
 		
@@ -223,6 +231,7 @@ public class Menu {
 			   
 		       case 1: 
 		           System.out.println("Saisir le nouveau Titre");
+		           scanner.nextLine();
 		           String titre_modif=scanner.nextLine(); 
 		           MessageDAO.Modifier_Titre_Message(em, message, utilisateur, titre_modif);
 		           System.out.println("Le titre a été modifié"); 
@@ -230,11 +239,9 @@ public class Menu {
 		   
 		       case 2:
 		    	   System.out.println("Saisir le nouveau corps du message");
-		           /*String corps=scanner2.nextLine(); 
-		           String SQL_modif_corps="UPDATE Message SET Texte='"+corps+"' WHERE Id_Message="+id_message; 
-		           
-		           stmt.execute(SQL_modif_corps); 
-		           System.out.println("Le corps du message a été modifié");*/
+		    	   String texte_modif=scanner.nextLine(); 
+		           //MessageDAO.Modifier_Texte_Message(em, message, utilisateur, texte_modif);
+		           System.out.println("Le corp du message a été modifié"); 
 		           break;
 		   
 		       case 3:
