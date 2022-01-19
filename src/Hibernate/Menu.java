@@ -1,9 +1,5 @@
 package Hibernate;
 
-import java.io.FileNotFoundException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -31,6 +27,7 @@ public class Menu {
 			String creer_compte=scanner.nextLine();
 			if(creer_compte.matches("oui")) {
 				Menu_Create_Utilisateur(em);
+				System.out.println("Votre compte à bien été créé !");
 			}
 			
 			System.out.println("Votre mail :");
@@ -70,7 +67,7 @@ public class Menu {
 			exist = UtilisateurDAO.Compare_Mdp(em, utilisateur, mot_de_passe);
 		}
 		
-		int id_utilisateur = utilisateur.getId();
+		System.out.println("Vous êtes à présent connecté !");
 		
 		Scanner scanner_boucle=new Scanner(System .in);
 		System.out.println("Souhaitez-vous allez dans le menu ?");
