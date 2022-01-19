@@ -15,14 +15,19 @@ public class MessageDAO {
 		return true; 
 	}
 	
-	public static void Supprimer_Message(EntityManager em ,Message m,Utilisateur u) {
-	boolean t=false; 
+	public static boolean Verify_Message_From_Utilisateur(Message m,Utilisateur u) {
+		boolean t=false; 
 		for (int i=0; i<u.getListe_Message().size();i++) {
 			if(u.getListe_Message().get(i)==m) {
 				t=true; 
 			}
 		}
-		if(t==true) {
+		return t; 
+	}
+	
+	public static void Supprimer_Message(EntityManager em ,Message m,Utilisateur u) {
+		
+		if(Verify_Message_From_Utilisateur(m,u)==true) {
 			em.createQuery("delete from Message where id = :id")
 			.setParameter("id", m.getId())
 			.executeUpdate();
@@ -42,8 +47,13 @@ public class MessageDAO {
 		}
 	}
 	
-	public static void Modifier_Message(EntityManager em) {
-		
+	public static void Modifier_Titre_Message(EntityManager em,Message m, Utilisateur u, String new_Titre) {
+		if(Verify_Message_From_Utilisateur(m,u)==true) {
+			m.setTitre(new_Titre);
+			em.createQuery("Update Message SET titre = ':titre'")
+			.setParameter("titre", m.getTitre())
+			.executeUpdate();
+		}
 	}
 	
 	
