@@ -21,6 +21,14 @@ public class Utilisateur {
 	
 	@OneToMany(mappedBy="u", cascade = CascadeType.ALL)
 	private List<Message> Liste_Message;
+	public Utilisateur() {
+		nom=null; 
+		prenom=null; 
+		mail=null; 
+		mot_de_passe=null; 
+		a=null; 
+		Liste_Message=new ArrayList<Message>(); 
+	}
 
 	public Utilisateur(String nom, String prenom, String mail, String mot_de_passe,Adresse a) {
 		this.nom=nom; 
