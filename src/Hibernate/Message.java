@@ -15,14 +15,9 @@ public class Message {
 	private String texte;
 	private Date date_de_post;
 	
-	public Message(String titre, String texte, Date date_de_poste,Utilisateur u) {
-		this.titre=titre; 
-		this.texte=texte; 
-		this.date_de_post=date_de_poste;
-		this.u=u; 
-	}
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Utilisateur u;
 	
 	@OneToMany(mappedBy="m", cascade = CascadeType.ALL)
@@ -37,7 +32,12 @@ public class Message {
 	public List<Lien> getListe_Lien() {
 		return Liste_Lien;
 	}
-
+	public Message(String titre, String texte, Date date_de_poste,Utilisateur u) {
+		this.titre=titre; 
+		this.texte=texte; 
+		this.date_de_post=date_de_poste;
+		this.u=u; 
+	}
 	public void setListe_Lien(List<Lien> liste_Lien) {
 		Liste_Lien = liste_Lien;
 	}

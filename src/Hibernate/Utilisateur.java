@@ -1,5 +1,7 @@
 package Hibernate;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,9 @@ public class Utilisateur {
 	
 	@OneToOne(mappedBy="u", cascade=CascadeType.ALL)
 	private Adresse a;
+	
+	@OneToMany(mappedBy="u", cascade = CascadeType.ALL)
+	private List<Message> Liste_Message;
 
 	public Utilisateur(String nom, String prenom, String mail, String mot_de_passe,Adresse a) {
 		this.nom=nom; 
