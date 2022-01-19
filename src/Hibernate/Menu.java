@@ -16,12 +16,12 @@ public class Menu {
 	public static void Menu_Principal(EntityManager em){
 		boolean menu_principal = false;
 		Scanner scan2=new Scanner(System .in);
-		String mail_identification;
+		String mail_identification = "";
 		while(menu_principal == false) {
 			System.out.println("Voulez-vous vous créer un compte ?");
 			String creer_compte=scanner.nextLine();
 			if(creer_compte.matches("oui")) {
-				//UtilisateurDAO.Create_Utilisateur(em);
+				Menu_Create_Utilisateur(em);
 			}
 			
 			System.out.println("Votre mail :");
@@ -74,16 +74,16 @@ public class Menu {
 			int choix = scanner_boucle.nextInt();
 			switch(choix) {
 			case 1:
-				MessageDAO.Create_Message(em);
+				Menu_Create_Message(em);
 				break;
 			case 2:
-				Message.del_message(id_utilisateur);
+				Menu_Supprimer_Message(em);
 				break;
 			case 3:
-				Message.modify_message(id_utilisateur);
+				Menu_Modifier_Message(em);
 				break;
 			case 4:
-				Affichage(id_utilisateur);
+				Affichage();
 				break;
 			default:
 				System.out.println("Choix incorrect");
@@ -91,5 +91,25 @@ public class Menu {
 			}
 			System.out.println("Souhaitez-vous rester dans le menu ?"); 
 		}
+	}
+	
+	public static void Menu_Create_Utilisateur(EntityManager em) {
+		
+	}
+	
+	public static void Menu_Create_Message(EntityManager em) {
+		
+	}
+	
+	public static void Menu_Supprimer_Message(EntityManager em) {
+		
+	}
+	
+	public static void Menu_Modifier_Message(EntityManager em) {
+		
+	}
+	
+	public static void Affichage() {
+		
 	}
 }

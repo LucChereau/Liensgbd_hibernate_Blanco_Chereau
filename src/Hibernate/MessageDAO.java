@@ -7,4 +7,14 @@ public class MessageDAO {
 	public static void Create_Message(EntityManager em) {
 		
 	}
+	
+	public static void Supprimer_Message(EntityManager em) {
+		
+	}
+	
+	public static void Modifier_Message(EntityManager em) {
+		
+	}
+	
+	
 }
