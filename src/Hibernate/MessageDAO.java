@@ -30,8 +30,6 @@ public class MessageDAO {
 		if(Verify_Message_From_Utilisateur(m,u)==true) {
 			em.persist(m);
 			em.remove(m);
-			em.flush();
-		    em.clear();
 		}
 	}
 	
