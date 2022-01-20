@@ -9,6 +9,8 @@ import javax.persistence.EntityManager;
 
 import org.hibernate.type.BlobType;
 
+import com.mysql.cj.jdbc.Blob;
+
 /**
  * 
  * Classe permettant de gerer tout les menus de l'application
@@ -164,7 +166,7 @@ public class Menu {
 		MessageDAO.Create_Message(em, utilisateur, titre, texte, date);
 		Message message = MessageDAO.GetMessage_from_title(em, titre,utilisateur);
 		Menu_Create_Lien(em, utilisateur, message);
-		Menu_Create_Image(em, utilisateur, message);
+		//Menu_Create_Image(em, utilisateur, message);
 		Menu_Create_Mot_Cle(em, utilisateur, message);
 		System.out.println("Votre message à bien été créé !"); 
 	}
@@ -211,7 +213,7 @@ public class Menu {
 	 * @param utilisateur
 	 * @param message
 	 */
-	public static void Menu_Create_Image(EntityManager em, Utilisateur utilisateur, Message message) {
+	/*public static void Menu_Create_Image(EntityManager em, Utilisateur utilisateur, Message message) {
 		System.out.println("Souhaitez-vous ajouter une image à votre message ?");
 		String oui = scanner.nextLine();
 		while(oui.matches("oui")) {
@@ -231,7 +233,7 @@ public class Menu {
 				}
 			}while(exist == false); 
 			
-			BlobType image = new BlobType();
+			Blob image = new Blob();
 			
 			ImageDAO.Create_Image(em, message, image, parcours);
 			System.out.println("Votre image à bien été ajouté !");
@@ -239,7 +241,7 @@ public class Menu {
 			System.out.println("Voulez vous ajouter une autre image à votre message ?");
 			oui = scanner.nextLine();
 		}
-	}
+	}*/
 	
 	/**
 	 * 
@@ -520,17 +522,59 @@ public class Menu {
 			System.out.println("2. Supprimer un mot-clé"); 
 			System.out.println("3. Ajouter un mot-clé"); 
 			System.out.println("-------------------------------"); 
-			
+			Scanner scan_boucle = new Scanner(System .in );
 			int choix = scanner.nextInt();
 			switch(choix) {
 			case 1:
-				Menu_Create_Message(em, utilisateur);
+				System.out.println("Saisir le mot-clé que vous voulez modifier :");
+		    	String mot_cle_contenu=scan_boucle.nextLine(); 
+		    	
+		    	boolean exist = false;
+				do  {
+					if(Mot_CleDAO.GetMot_Cle_from_Contenu(em, mot_cle_contenu, message) == null) {
+						exist = false;
+					} else {
+						exist = true;
+					}
+					if(exist == false) {
+						System.out.println("Ce mot-clé n'est pas utilisé dans votre message,"
+								+ " veuillez en renseigner un nouveau :");
+						mot_cle_contenu=scanner.nextLine(); 
+					}
+				}while(exist == false);
+		    	
+				Mot_Cle mot_cle = Mot_CleDAO.GetMot_Cle_from_Contenu(em, mot_cle_contenu, message);
+				
+		    	System.out.println("Saisir le nouveau mot-clé que vous voulez ajouter :");
+		    	String new_mot_cle=scan_boucle.nextLine(); 
+		        Mot_CleDAO.Modify_Contenu_mot_cle(em, message, mot_cle, new_mot_cle);
+		        System.out.println("Le mot-clé a été modifié"); 
 				break;
 			case 2:
-				Menu_Supprimer_Message(em, utilisateur);
+				System.out.println("Saisir le mot-clé que vous voulez supprimer :");
+		    	String mot_cle_suppr=scan_boucle.nextLine(); 
+		    	
+		    	boolean exist2 = false;
+				do  {
+					if(Mot_CleDAO.GetMot_Cle_from_Contenu(em, mot_cle_suppr, message) == null) {
+						exist2 = false;
+					} else {
+						exist2 = true;
+					}
+					if(exist2 == false) {
+						System.out.println("Ce mot-clé n'est pas utilisé dans votre message,"
+								+ " veuillez en renseigner un nouveau :");
+						mot_cle_suppr=scanner.nextLine(); 
+					}
+				}while(exist2 == false);
+		    	
+				Mot_Cle mot_cle2 = Mot_CleDAO.GetMot_Cle_from_Contenu(em, mot_cle_suppr, message);
+				
+		        Mot_CleDAO.Supprimer_Mot_Cle(em, message, mot_cle2);
+		        System.out.println("Le mot-clé a été supprimé");
 				break;
 			case 3:
-				Menu_Modifier_Message(em, utilisateur);
+				Menu.Menu_Create_Mot_Cle(em, utilisateur, message);
 				break;
 			default:
 				System.out.println("Choix incorrect");
