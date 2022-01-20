@@ -64,7 +64,7 @@ public class LienDAO {
 		}
 	}
 	
-	public static Lien GetLien_grom_Adresse_Lien(EntityManager em, String adresse_lien, Message m) {
+	public static Lien GetLien_from_Adresse_Lien(EntityManager em, String adresse_lien, Message m) {
 		String hql = "from Lien l where l.adresse_Lien = :adresse AND l.m= :message";
 		Query q = em.createQuery(hql);
 		q.setParameter("adresse", adresse_lien);
