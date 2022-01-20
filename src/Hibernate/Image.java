@@ -1,17 +1,16 @@
 package Hibernate;
 
+import java.io.File;
+import java.io.FileInputStream;
+
 import javax.persistence.*;
-
-import org.hibernate.type.BlobType;
-
-import com.mysql.cj.jdbc.Blob;
 @Entity 
 public class Image {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id_Image; 
-	@Lob
-	private Blob Contenu_Image; 
+	
+	private byte[] Contenu_Image; 
 	
 	private String Lien_serveur; 
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -22,9 +21,19 @@ public class Image {
 		Lien_serveur=null; 
 	}
 	
-	public Image(Blob Contenu_Image, String Lien_serveur, Message m) {
-		this.Contenu_Image=Contenu_Image; 
+	public Image(String Lien_serveur, Message m) { 
 		this.Lien_serveur=Lien_serveur; 
+		File file = new File("C:\test.png");
+		byte[] imageData = new byte[(int) file.length()];
+		try {
+		    FileInputStream fileInputStream = new FileInputStream(file);
+		    fileInputStream.read(imageData);
+		    fileInputStream.close();
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		
+		this.Contenu_Image=imageData; 
 		this.m=m; 
 	}
 	
@@ -34,10 +43,10 @@ public class Image {
 	public void setId_Image(int id_Image) {
 		this.id_Image = id_Image;
 	}
-	public Blob getContenu_Image() {
+	public byte[] getContenu_Image() {
 		return Contenu_Image;
 	}
-	public void setContenu_Image(Blob contenu_Image) {
+	public void setContenu_Image(byte[] contenu_Image) {
 		Contenu_Image = contenu_Image;
 	}
 	public String getLien_serveur() {

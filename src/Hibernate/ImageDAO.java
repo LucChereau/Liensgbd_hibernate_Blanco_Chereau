@@ -13,8 +13,8 @@ import org.hibernate.type.BlobType;
 import com.mysql.cj.jdbc.Blob;
 
 public class ImageDAO {
-	public static void Create_Image(EntityManager em, Message m, Blob Contenu_Image, String Lien_serveur) {
-		Image I=new Image(Contenu_Image,Lien_serveur,m); 
+	public static void Create_Image(EntityManager em, Message m, String Lien_serveur) {
+		Image I=new Image(Lien_serveur,m); 
 		em.getTransaction().begin();
 		em.persist(I);
 		em.getTransaction().commit();
@@ -30,14 +30,12 @@ public class ImageDAO {
 		return t; 
 	}
 	
-	public static void Modify_Lien_serveur_Image(EntityManager em, Message m, Image I) {
-		byte[] data=null; 
-		Path path=Paths.get(I.getLien_serveur()); 
-		try {
-			data=Files.readAllBytes(path); 
-		} catch(IOException e) {
-			e.printStackTrace(); 
+	public static void Modify_Lien_serveur_Image(EntityManager em, Message m,Image I,String Lien_serveur) {
+		if(Verify_Image_from_Message(m,I)==true) {
+			Supprimer_Image(em,m,I); 
+			Create_Image(em,m,Lien_serveur); 
 		}
+		
 	}
 	
 	public static void Supprimer_Image(EntityManager em, Message m, Image I) {
