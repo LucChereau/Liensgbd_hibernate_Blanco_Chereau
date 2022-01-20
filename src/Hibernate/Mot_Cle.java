@@ -7,6 +7,16 @@ public class Mot_Cle {
 	private String Contenu_mot_cle; 
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Message m;
+	
+	public Mot_Cle() {
+		Contenu_mot_cle=null;
+	}
+	
+	public Mot_Cle(String Contenu_Mot_Cle, Message m) {
+		this.Contenu_mot_cle=Contenu_Mot_Cle; 
+		this.m=m; 
+	}
+	
 	public String getContenu_mot_cle() {
 		return Contenu_mot_cle;
 	}
