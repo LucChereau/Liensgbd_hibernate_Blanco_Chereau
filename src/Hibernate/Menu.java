@@ -1,15 +1,11 @@
 package Hibernate;
 
-import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import javax.persistence.EntityManager;
-
-import org.hibernate.type.BlobType;
-
-import com.mysql.cj.jdbc.Blob;
 
 /**
  * 
@@ -73,10 +69,10 @@ public class Menu {
 		}
 		
 		System.out.println("Vous êtes à présent connecté !");
-		
-		Scanner scanner_boucle=new Scanner(System .in);
+		Scanner scanner_boucle = new Scanner(System .in );
 		System.out.println("Souhaitez-vous allez dans le menu ?");
-		while(scanner.nextLine().matches("oui")) {
+		String reponse = scanner.nextLine();
+		while(reponse.matches("oui")) {
 			System.out.println("-------------------------------"); 
 			System.out.println("1. Publier un message"); 
 			System.out.println("2. Supprimer un message"); 
@@ -96,13 +92,14 @@ public class Menu {
 				Menu_Modifier_Message(em, utilisateur);
 				break;
 			case 4:
-				Affichage(em, utilisateur);
+				Menu_Affichage_Message(em, utilisateur);
 				break;
 			default:
 				System.out.println("Choix incorrect");
 				break;
 			}
 			System.out.println("Souhaitez-vous rester dans le menu ?"); 
+			reponse = scanner_boucle.nextLine();
 		}
 	}
 	
@@ -330,9 +327,8 @@ public class Menu {
 				verif = true;
 			}
 		}
-		Scanner scan_boucle = new Scanner(System .in );
 		System.out.println("Voulez-vous modifier le message ?");
-		String oui = scan_boucle.nextLine();
+		String oui = scanner.nextLine();
 		while(oui.matches("oui")) {
 			System.out.println("-------------------------------"); 
 			System.out.println("1. Modifier le Titre"); 
@@ -342,6 +338,7 @@ public class Menu {
 			System.out.println("5. Modifier les Mots_clés"); 
 			System.out.println("-------------------------------"); 
 			int choix=scanner.nextInt(); 
+			Scanner scan_boucle = new Scanner(System .in );
 			switch(choix){
 		       case 1: 
 		           System.out.println("Saisir le nouveau Titre");
@@ -351,7 +348,7 @@ public class Menu {
 			   			exist = MessageDAO.Verify_title(em, titre_modif);
 			   			if(exist == false) {
 			   				System.out.println("Le titre de votre message est déjà pris, veuillez en renseigner un nouveau :");
-			   				titre_modif=scanner.nextLine(); 
+			   				titre_modif=scan_boucle.nextLine(); 
 			   			}
 			   		}
 		           MessageDAO.Modifier_Titre_Message(em, message, utilisateur, titre_modif);
@@ -384,8 +381,6 @@ public class Menu {
 			System.out.println("Souhaitez vous continuer a modifier le message ? ");
 			oui=scan_boucle.nextLine();
 		}
-		
-		System.out.println("Votre message à bien été modifié");
 	}
 	
 	public static void Menu_Modify_Lien(EntityManager em, Utilisateur utilisateur, Message message) {
@@ -479,8 +474,8 @@ public class Menu {
 				System.out.println("Choix incorrect");
 				break;
 			}
-			System.out.println("Souhaitez-vous rester dans le menu ?"); 
-			oui = scanner.nextLine();
+			System.out.println("Souhaitez-vous modifier un autre lien ?"); 
+			oui = scan_boucle.nextLine();
 		}
 	}
 	
@@ -510,7 +505,7 @@ public class Menu {
 				System.out.println("Choix incorrect");
 				break;
 			}
-			System.out.println("Souhaitez-vous rester dans le menu ?"); 
+			System.out.println("Souhaitez-vous modifier une autre image ?"); 
 			oui = scanner.nextLine();
 		}
 	}
@@ -582,8 +577,8 @@ public class Menu {
 				System.out.println("Choix incorrect");
 				break;
 			}
-			System.out.println("Souhaitez-vous rester dans le menu ?"); 
-			oui = scanner.nextLine();
+			System.out.println("Souhaitez-vous modifier d'autre mot-clé ?"); 
+			oui = scan_boucle.nextLine();
 		}
 	}
 	
@@ -592,7 +587,47 @@ public class Menu {
 	 * @param em
 	 * @param utilisateur
 	 */
-	public static void Affichage(EntityManager em, Utilisateur utilisateur) {
+	public static void Menu_Affichage_Message(EntityManager em, Utilisateur utilisateur) {
+		System.out.println("-------------------------------"); 
+		System.out.println("1. Afficher tous les messages"); 
+		System.out.println("2. Afficher tous vos messages"); 
+		System.out.println("3. Afficher tous les messages par date"); 
+		System.out.println("4. Afficher tous les messages par mot-clé"); 
+		System.out.println("-------------------------------"); 
+		Scanner scan_boucle = new Scanner(System .in );
+		int choix = scanner.nextInt();
+		switch(choix) {
+		case 1:
+			List<Message> liste_message = MessageDAO.get_All_Message(em);
+			
+			for (Message message : liste_message){
+				
+				System.out.println("Titre : "+message.getTitre());
+				System.out.println("Message : "+message.getTexte());
+				System.out.println("Date de post : "+message.getDate_de_post());
+				
+				for(Lien lien : message.getListe_Lien()) {
+					System.out.println("Lien : "+lien.getAdresse_Lien());
+					System.out.println("Description : "+lien.getTexte());
+				}
+				
+				for(Image image : message.getListe_Image()) {
+					
+				}
+			}
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		default:
+			break;
+		}
+	}
+	
+	public static void Affichage_Message(EntityManager em, List<Message> liste_message) {
 		
 	}
 }

@@ -16,15 +16,6 @@ public class Message {
 	private String texte;
 	private Date date_de_post;
 	
-	public Message() {
-		titre=null; 
-		texte=null; 
-		date_de_post=null; 
-		Liste_Lien=new ArrayList<Lien>(); 
-		Liste_Mot_Cle=new ArrayList<Mot_Cle>(); 
-		Liste_Image=new ArrayList<Image>(); 
-	}
-	
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Utilisateur u;
 	
@@ -36,6 +27,15 @@ public class Message {
 	
 	@OneToMany(mappedBy="m",cascade = CascadeType.ALL)
 	private List<Image> Liste_Image; 
+	
+	public Message() {
+		titre=null; 
+		texte=null; 
+		date_de_post=null; 
+		Liste_Lien=new ArrayList<Lien>(); 
+		Liste_Mot_Cle=new ArrayList<Mot_Cle>(); 
+		Liste_Image=new ArrayList<Image>(); 
+	}
 	
 	public List<Lien> getListe_Lien() {
 		return Liste_Lien;
