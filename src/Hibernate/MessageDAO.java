@@ -65,7 +65,7 @@ public class MessageDAO {
 			em.getTransaction().begin();
 			em.persist(m);
 			m.setTitre(new_Titre);
-			String hql="Update Message m SET m.titre = :titre WHERE m.id= :id"; 
+			String hql="Update Message m SET titre = :titre WHERE m.id= :id"; 
 			Query q=em.createQuery(hql); 
 			q.setParameter("titre", m.getTitre()); 
 			q.setParameter("id", m.getId()); 
@@ -73,6 +73,18 @@ public class MessageDAO {
 			em.getTransaction().commit();
 		}
 	}
-	
+	public static void Modifier_Corps_Message(EntityManager em,Message m, Utilisateur u, String new_Texte) {
+		if(Verify_Message_From_Utilisateur(m,u)==true) {
+			em.getTransaction().begin();
+			em.persist(m);
+			m.setTexte(new_Texte);
+			String hql="Update Message m SET texte = :titre WHERE m.id= :id"; 
+			Query q=em.createQuery(hql); 
+			q.setParameter("titre", m.getTitre()); 
+			q.setParameter("id", m.getId()); 
+			q.executeUpdate();
+			em.getTransaction().commit();
+		}
+	}
 	
 }

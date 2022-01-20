@@ -10,8 +10,14 @@ public class LienDAO {
 		em.getTransaction().commit();
 	}
 	
-	public static void Verify_Lien_From_Message(EntityManager em,Lien l, Message m ) {
-		
+	public static boolean Verify_Lien_From_Message(EntityManager em,Lien l, Message m ) {
+		boolean t=false; 
+		for (int i=0; i<m.getListe_Lien().size();i++) {
+			if(m.getListe_Lien().get(i)==l) {
+				t=true; 
+			}
+		}
+		return t; 
 	}
 	
 	public static void Modify_Adresse_Lien() {
