@@ -6,9 +6,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.hibernate.type.BlobType;
+import com.mysql.cj.jdbc.Blob;
 
 public class ImageDAO {
-	public static void Create_Image(EntityManager em, Message m, BlobType Contenu_Image, String Lien_serveur) {
+	public static void Create_Image(EntityManager em, Message m, Blob Contenu_Image, String Lien_serveur) {
 		Image I=new Image(Contenu_Image,Lien_serveur,m); 
 		em.getTransaction().begin();
 		em.persist(I);

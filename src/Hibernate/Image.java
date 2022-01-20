@@ -10,7 +10,9 @@ public class Image {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id_Image; 
-	private BlobType Contenu_Image; 
+	@Lob
+	private Blob Contenu_Image; 
+	
 	private String Lien_serveur; 
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Message m;
@@ -20,7 +22,7 @@ public class Image {
 		Lien_serveur=null; 
 	}
 	
-	public Image(BlobType Contenu_Image, String Lien_serveur, Message m) {
+	public Image(Blob Contenu_Image, String Lien_serveur, Message m) {
 		this.Contenu_Image=Contenu_Image; 
 		this.Lien_serveur=Lien_serveur; 
 		this.m=m; 
@@ -32,10 +34,10 @@ public class Image {
 	public void setId_Image(int id_Image) {
 		this.id_Image = id_Image;
 	}
-	public BlobType getContenu_Image() {
+	public Blob getContenu_Image() {
 		return Contenu_Image;
 	}
-	public void setContenu_Image(BlobType contenu_Image) {
+	public void setContenu_Image(Blob contenu_Image) {
 		Contenu_Image = contenu_Image;
 	}
 	public String getLien_serveur() {
