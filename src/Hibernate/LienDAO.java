@@ -1,5 +1,7 @@
 package Hibernate;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -10,6 +12,7 @@ public class LienDAO {
 		em.persist(l);
 		em.getTransaction().commit();
 	}
+	
 	
 	public static boolean Verify_Lien_From_Message(Message m,Lien l) {
 		boolean t=false; 
@@ -58,6 +61,20 @@ public class LienDAO {
 			q.setParameter("id", l.getId_lien()); 
 			q.executeUpdate();
 			em.getTransaction().commit();
+		}
+	}
+	
+	public static Lien GetLien_grom_Adresse_Lien(EntityManager em, String adresse_lien, Message m) {
+		String hql = "from Lien l where l.adresse_Lien = :adresse AND l.m= :message";
+		Query q = em.createQuery(hql);
+		q.setParameter("adresse", adresse_lien);
+		q.setParameter("message", m); 
+		List<Lien> result = q.getResultList(); 
+		if(result.size()==0) {
+			return null; 
+		}
+		else {
+		return result.get(0);
 		}
 	}
 	
