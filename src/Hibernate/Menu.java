@@ -176,9 +176,12 @@ public class Menu {
 	public static void Menu_Create_Lien(EntityManager em, Utilisateur utilisateur, Message message) {
 		System.out.println("Souhaitez-vous ajouter un lien à votre message ?");
 		String oui = scanner.nextLine();
-		boolean verif_create = true;
 		while(oui == "oui") {
-			
+			System.out.println("Veuillez siasir l'adresse URL de votre lien :");
+			String lien = scanner.nextLine();
+			System.out.println("Veuillez siasir un descriptif de celui-ci :");
+			String desc = scanner.nextLine();
+			LienDAO.Create_Lien(em, lien, desc, message);
 		}
 	}
 	
@@ -314,7 +317,8 @@ public class Menu {
 	
 	public static void Menu_Modify_Lien(EntityManager em, Utilisateur utilisateur, Message message) {
 		System.out.println("Souhaitez-vous modifier, supprimer ou ajouter un lien à votre message ?");
-		while(scanner.nextLine().matches("oui")) {
+		String oui = scanner.nextLine();
+		while(oui.matches("oui")) {
 			System.out.println("-------------------------------"); 
 			System.out.println("1. Modifier le lien"); 
 			System.out.println("2. Modifier le descriptif"); 
@@ -341,6 +345,7 @@ public class Menu {
 				break;
 			}
 			System.out.println("Souhaitez-vous rester dans le menu ?"); 
+			oui = scanner.nextLine();
 		}
 	}
 	
