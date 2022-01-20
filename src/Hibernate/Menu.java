@@ -214,14 +214,14 @@ public class Menu {
 		System.out.println("Veuillez saisir le titre du message que vous voulez supprimer :"); 
 		titre=scanner.nextLine(); 
 		
-		message = MessageDAO.GetMessage_from_title(em, titre);
+		message = MessageDAO.GetMessage_from_title(em, titre,utilisateur);
 		
 		while(verif == false) {
 			if (message == null) {
 				System.out.println("Aucun de vos messages ne possède ce titre, veuillez saisir un titre valide :"); 
 				titre=scanner.nextLine(); 
 				
-				message = MessageDAO.GetMessage_from_title(em, titre);
+				message = MessageDAO.GetMessage_from_title(em, titre,utilisateur);
 			} else {
 				verif = true;
 			}
