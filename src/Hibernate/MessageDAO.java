@@ -1,5 +1,7 @@
 package Hibernate;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.persistence.*;
 
@@ -97,12 +99,23 @@ public class MessageDAO {
 	}
 	
 	public static List<Message> get_Message_Utilisateur(EntityManager em, Utilisateur utilisateur){
-		Query query = em.createQuery("from Message"); 
-		
-		List<Message> list = query.getResultList();
+		String hql = "select Liste_Message from Utilisateur u where u = :utilisateur";
+		Query q = em.createQuery(hql);
+		q.setParameter("utilisateur", utilisateur);
+		List<Message> list = q.getResultList();
 		
 		return list;
 	}
 	
-	
+	public static List<Message> get_Message_Par_Date(EntityManager em, Utilisateur utilisateur, String date_str) throws ParseException{
+		String hql = "from Message m where m.date_de_post = :date";
+		Query q = em.createQuery(hql);
+		date_str = date_str+" 00:00:00";
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		Date date = formatter.parse(date_str);
+		q.setParameter("date", date);
+		List<Message> list = q.getResultList();
+		
+		return list;
+	}
 }

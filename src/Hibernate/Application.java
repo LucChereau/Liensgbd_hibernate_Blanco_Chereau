@@ -1,9 +1,11 @@
 package Hibernate;
 
+import java.text.ParseException;
+
 import javax.persistence.*;
 
 public class Application {
-	public static void main(String[] args){
+	public static void main(String[] args) throws ParseException{
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("test");
 		EntityManager em = emf.createEntityManager();
 		

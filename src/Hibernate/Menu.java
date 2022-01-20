@@ -1,6 +1,9 @@
 package Hibernate;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -18,8 +21,9 @@ public class Menu {
 	/**
 	 * Methode s'occupant du menu principal de l'application
 	 * @param em
+	 * @throws ParseException 
 	 */
-	public static void Menu_Principal(EntityManager em){
+	public static void Menu_Principal(EntityManager em) throws ParseException{
 		boolean menu_principal = false;
 		Scanner scan2=new Scanner(System .in);
 		String mail_identification = "";
@@ -625,8 +629,9 @@ public class Menu {
 	 * Methode permettant la gestion du sous menu d'affichage des messages
 	 * @param em
 	 * @param utilisateur
+	 * @throws ParseException 
 	 */
-	public static void Menu_Affichage_Message(EntityManager em, Utilisateur utilisateur) {
+	public static void Menu_Affichage_Message(EntityManager em, Utilisateur utilisateur) throws ParseException {
 		System.out.println("-------------------------------"); 
 		System.out.println("1. Afficher tous les messages"); 
 		System.out.println("2. Afficher tous vos messages"); 
@@ -645,9 +650,14 @@ public class Menu {
 			Affichage_Message(em, liste_ses_message);
 			break;
 		case 3:
-			
+			System.out.println("Saisir la date dont vous voulez voir les messages (format : AAAA-MM-JJ):");
+	    	String date_message_txt=scan_boucle.nextLine(); 
+	    	
+			List<Message> liste_message_par_date = MessageDAO.get_Message_Par_Date(em, utilisateur, date_message_txt);
+			Affichage_Message(em, liste_message_par_date);
 			break;
 		case 4:
+			
 			break;
 		default:
 			break;
