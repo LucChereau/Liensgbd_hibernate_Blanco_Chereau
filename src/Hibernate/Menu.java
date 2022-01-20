@@ -180,10 +180,24 @@ public class Menu {
 		String oui = scanner.nextLine();
 		while(oui.matches("oui")) {
 			System.out.println("Veuillez saisir l'adresse URL de votre lien :");
-			String lien = scanner.nextLine();
+			String lien_txt = scanner.nextLine();
+			boolean exist = false;
+			do  {
+				if(LienDAO.GetLien_from_Adresse_Lien(em, lien_txt, message) != null) {
+					exist = false;
+				} else {
+					exist = true;
+				}
+				if(exist == false) {
+					System.out.println("Ce lien est déjà utilisé dans votre message,"
+							+ " veuillez en renseigner un nouveau :");
+					lien_txt=scanner.nextLine(); 
+				}
+			}while(exist == false); 
+			
 			System.out.println("Veuillez saisir un descriptif de celui-ci :");
 			String desc = scanner.nextLine();
-			LienDAO.Create_Lien(em, lien, desc, message);
+			LienDAO.Create_Lien(em, lien_txt, desc, message);
 			System.out.println("Votre lien à bien été ajouté !");
 			
 			System.out.println("Voulez vous ajouter un autre lien à votre message ?");
@@ -203,7 +217,22 @@ public class Menu {
 		while(oui.matches("oui")) {
 			System.out.println("Veuillez saisir le parcours serveur pour l'image :");
 			String parcours = scanner.nextLine();
+			boolean exist = false;
+			do  {
+				if(ImageDAO.get(em, parcours, message) != null) {
+					exist = false;
+				} else {
+					exist = true;
+				}
+				if(exist == false) {
+					System.out.println("Cette image est déjà utilisé dans votre message,"
+							+ " veuillez en renseigner une nouvelle :");
+					parcours=scanner.nextLine(); 
+				}
+			}while(exist == false); 
+			
 			BlobType image = new BlobType();
+			
 			ImageDAO.Create_Image(em, message, image, parcours);
 			System.out.println("Votre image à bien été ajouté !");
 			
@@ -224,6 +253,20 @@ public class Menu {
 		while(oui.matches("oui")) {
 			System.out.println("Veuillez saisir un mot clé :");
 			String mot_cle = scanner.nextLine();
+			boolean exist = false;
+			do  {
+				if(Mot_CleDAO.get(em, mot_cle, message) != null) {
+					exist = false;
+				} else {
+					exist = true;
+				}
+				if(exist == false) {
+					System.out.println("Ce mot_clé est déjà utilisé dans votre message,"
+							+ " veuillez en renseigner un nouveau :");
+					mot_cle=scanner.nextLine(); 
+				}
+			}while(exist == false); 
+			
 			Mot_CleDAO.Create_Mot_Cle(em, mot_cle, message);
 			System.out.println("Votre mot-clé à bien été ajouté !");
 			
@@ -296,8 +339,7 @@ public class Menu {
 			System.out.println("5. Modifier les Mots_clés"); 
 			System.out.println("-------------------------------"); 
 			int choix=scanner.nextInt(); 
-			   switch(choix){
-			   
+			switch(choix){
 		       case 1: 
 		           System.out.println("Saisir le nouveau Titre");
 		           String titre_modif=scan_boucle.nextLine(); 
@@ -321,22 +363,22 @@ public class Menu {
 		           break;
 		   
 		       case 3:
-		    	   		/*Lien.modify_lien(id_message); */
-		    	   		break; 
+		    	   Menu_Modify_Lien(em, utilisateur, message);
+		    	   break; 
 		           
 		       case 4: 
-		           		//Image.modify_image(id_message); 
-		           		break;
+		    	   Menu_Modify_Image(em, utilisateur, message); 
+		           break;
 		   
 		       case 5:
-		    	   		//Mot_Cle.modify_key_word(id_message); 
-		    	   		break;
+		    	   Menu_Modify_Mot_Cle(em, utilisateur, message); 
+		    	   break;
 		           
 		       default:
-		           		System.out.println("Choix incorrect");
-		           		break;
-		   }
-			   System.out.println("Souhaitez vous continuer a modifier le message ? ");
+		           System.out.println("Choix incorrect");
+		           break;
+			}
+			System.out.println("Souhaitez vous continuer a modifier le message ? ");
 		}
 		
 		System.out.println("Votre message à bien été modifié");
@@ -347,10 +389,56 @@ public class Menu {
 		String oui = scanner.nextLine();
 		while(oui.matches("oui")) {
 			System.out.println("-------------------------------"); 
-			System.out.println("1. Modifier le lien"); 
-			System.out.println("2. Modifier le descriptif"); 
+			System.out.println("1. Modifier un lien"); 
+			System.out.println("2. Modifier un descriptif"); 
 			System.out.println("3. Supprimer un lien"); 
 			System.out.println("4. Ajouter un lien"); 
+			System.out.println("-------------------------------"); 
+			
+			int choix = scanner.nextInt();
+			Scanner scan_boucle = new Scanner(System .in );
+			switch(choix) {
+			case 1:
+				System.out.println("Saisir le lien que vous voulez modifier :");
+		    	String ancien_lien=scan_boucle.nextLine(); 
+		    	System.out.println("Saisir le nouveau lien que vous voulez ajouter :");
+		    	String new_lien=scan_boucle.nextLine(); 
+		        LienDAO.Modifier_Lien(em, message, utilisateur, texte_modif);
+		        System.out.println("Le lien a été modifié"); 
+				break;
+			case 2:
+				System.out.println("Saisir le lien que vous voulez modifier :");
+		    	String lien=scan_boucle.nextLine(); 
+		    	System.out.println("Saisir le nouveau descriptif que vous voulez ajouter :");
+		    	String new_desc=scan_boucle.nextLine(); 
+		        LienDAO.Modifier_Desc_Lien(em, message, utilisateur, texte_modif);
+		        System.out.println("Le descriptif du lien a été modifié"); 
+				break;
+			case 3:
+				System.out.println("Saisir le lien que vous voulez supprimer :");
+		    	String lien=scan_boucle.nextLine(); 
+		    	LienDAO.Supprimer_Lien(em, message, null);
+				break;
+			case 4:
+				Menu_Create_Lien(em, utilisateur, message);
+				break;
+			default:
+				System.out.println("Choix incorrect");
+				break;
+			}
+			System.out.println("Souhaitez-vous rester dans le menu ?"); 
+			oui = scanner.nextLine();
+		}
+	}
+	
+	public static void Menu_Modify_Image(EntityManager em, Utilisateur utilisateur, Message message) {
+		System.out.println("Souhaitez-vous modifier, supprimer ou ajouter une image à votre message ?");
+		String oui = scanner.nextLine();
+		while(oui.matches("oui")) {
+			System.out.println("-------------------------------"); 
+			System.out.println("1. Modifier une image"); 
+			System.out.println("2. Supprimer une image"); 
+			System.out.println("3. Ajouter une image"); 
 			System.out.println("-------------------------------"); 
 			
 			int choix = scanner.nextInt();
@@ -364,8 +452,35 @@ public class Menu {
 			case 3:
 				Menu_Modifier_Message(em, utilisateur);
 				break;
-			case 4:
-				Affichage(em, utilisateur);
+			default:
+				System.out.println("Choix incorrect");
+				break;
+			}
+			System.out.println("Souhaitez-vous rester dans le menu ?"); 
+			oui = scanner.nextLine();
+		}
+	}
+	
+	public static void Menu_Modify_Mot_Cle(EntityManager em, Utilisateur utilisateur, Message message) {
+		System.out.println("Souhaitez-vous modifier, supprimer ou ajouter un mot-clé à votre message ?");
+		String oui = scanner.nextLine();
+		while(oui.matches("oui")) {
+			System.out.println("-------------------------------"); 
+			System.out.println("1. Modifier un mot-clé"); 
+			System.out.println("2. Supprimer un mot-clé"); 
+			System.out.println("3. Ajouter un mot-clé"); 
+			System.out.println("-------------------------------"); 
+			
+			int choix = scanner.nextInt();
+			switch(choix) {
+			case 1:
+				Menu_Create_Message(em, utilisateur);
+				break;
+			case 2:
+				Menu_Supprimer_Message(em, utilisateur);
+				break;
+			case 3:
+				Menu_Modifier_Message(em, utilisateur);
 				break;
 			default:
 				System.out.println("Choix incorrect");
