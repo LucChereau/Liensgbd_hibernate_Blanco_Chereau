@@ -4,6 +4,7 @@ import javax.persistence.*;
 public class Mot_Cle {
 	@Id
 	private int id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private String Contenu_mot_cle; 
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Message m;

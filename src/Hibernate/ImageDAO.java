@@ -1,5 +1,9 @@
 package Hibernate;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -27,7 +31,13 @@ public class ImageDAO {
 	}
 	
 	public static void Modify_Lien_serveur_Image(EntityManager em, Message m, Image I) {
-		
+		byte[] data=null; 
+		Path path=Paths.get(I.getLien_serveur()); 
+		try {
+			data=Files.readAllBytes(path); 
+		} catch(IOException e) {
+			e.printStackTrace(); 
+		}
 	}
 	
 	public static void Supprimer_Image(EntityManager em, Message m, Image I) {
