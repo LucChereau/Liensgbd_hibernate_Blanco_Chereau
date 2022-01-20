@@ -1,5 +1,7 @@
 package Hibernate;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -45,5 +47,19 @@ public class Mot_CleDAO {
 			em.getTransaction().commit();
 		}
 		
+	}
+		
+	public static Mot_Cle GetMot_Cle_from_Contenu(EntityManager em, String Contenu_Mot_Cle, Message m) {
+		String hql = "from Mot_Cle mc where mc.Contenu_mot_cle = :contenu AND mc.m= :message";
+		Query q = em.createQuery(hql);
+		q.setParameter("contenu", Contenu_Mot_Cle);
+		q.setParameter("message", m); 
+		List<Mot_Cle> result = q.getResultList(); 
+			if(result.size()==0) {
+				return null; 
+			}
+			else {
+				return result.get(0);
+			}
 	}
 }
