@@ -104,6 +104,7 @@ public class Menu {
 				break;
 			}
 			System.out.println("Souhaitez-vous rester dans le menu ?"); 
+			scanner_boucle.nextLine();
 			reponse = scanner_boucle.nextLine();
 		}
 	}
