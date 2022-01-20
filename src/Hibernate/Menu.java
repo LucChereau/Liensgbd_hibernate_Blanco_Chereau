@@ -7,6 +7,8 @@ import java.util.regex.Pattern;
 
 import javax.persistence.EntityManager;
 
+import org.hibernate.type.BlobType;
+
 /**
  * 
  * Classe permettant de gerer tout les menus de l'application
@@ -176,12 +178,16 @@ public class Menu {
 	public static void Menu_Create_Lien(EntityManager em, Utilisateur utilisateur, Message message) {
 		System.out.println("Souhaitez-vous ajouter un lien à votre message ?");
 		String oui = scanner.nextLine();
-		while(oui == "oui") {
-			System.out.println("Veuillez siasir l'adresse URL de votre lien :");
+		while(oui.matches("oui")) {
+			System.out.println("Veuillez saisir l'adresse URL de votre lien :");
 			String lien = scanner.nextLine();
-			System.out.println("Veuillez siasir un descriptif de celui-ci :");
+			System.out.println("Veuillez saisir un descriptif de celui-ci :");
 			String desc = scanner.nextLine();
 			LienDAO.Create_Lien(em, lien, desc, message);
+			System.out.println("Votre lien à bien été ajouté !");
+			
+			System.out.println("Voulez vous ajouter un autre lien à votre message ?");
+			oui = scanner.nextLine();
 		}
 	}
 	
@@ -192,7 +198,18 @@ public class Menu {
 	 * @param message
 	 */
 	public static void Menu_Create_Image(EntityManager em, Utilisateur utilisateur, Message message) {
-		
+		System.out.println("Souhaitez-vous ajouter une image à votre message ?");
+		String oui = scanner.nextLine();
+		while(oui.matches("oui")) {
+			System.out.println("Veuillez saisir le parcours serveur pour l'image :");
+			String parcours = scanner.nextLine();
+			BlobType image = new BlobType();
+			ImageDAO.Create_Image(em, message, image, parcours);
+			System.out.println("Votre image à bien été ajouté !");
+			
+			System.out.println("Voulez vous ajouter une autre image à votre message ?");
+			oui = scanner.nextLine();
+		}
 	}
 	
 	/**
@@ -202,7 +219,17 @@ public class Menu {
 	 * @param message
 	 */
 	public static void Menu_Create_Mot_Cle(EntityManager em, Utilisateur utilisateur, Message message) {
-		
+		System.out.println("Souhaitez-vous ajouter un mot_clé à votre message ?");
+		String oui = scanner.nextLine();
+		while(oui.matches("oui")) {
+			System.out.println("Veuillez saisir un mot clé :");
+			String mot_cle = scanner.nextLine();
+			Mot_CleDAO.Create_Mot_Cle(em, mot_cle, message);
+			System.out.println("Votre mot-clé à bien été ajouté !");
+			
+			System.out.println("Voulez vous ajouter un autre mot-clé à votre message ?");
+			oui = scanner.nextLine();
+		}
 	}
 	
 	/**
