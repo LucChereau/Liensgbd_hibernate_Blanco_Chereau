@@ -163,7 +163,7 @@ public class Menu {
 		MessageDAO.Create_Message(em, utilisateur, titre, texte, date);
 		Message message = MessageDAO.GetMessage_from_title(em, titre,utilisateur);
 		Menu_Create_Lien(em, utilisateur, message);
-		//Menu_Create_Image(em, utilisateur, message);
+		Menu_Create_Image(em, utilisateur, message);
 		Menu_Create_Mot_Cle(em, utilisateur, message);
 		System.out.println("Votre message à bien été créé !"); 
 	}
@@ -210,7 +210,7 @@ public class Menu {
 	 * @param utilisateur
 	 * @param message
 	 */
-	/*public static void Menu_Create_Image(EntityManager em, Utilisateur utilisateur, Message message) {
+	public static void Menu_Create_Image(EntityManager em, Utilisateur utilisateur, Message message) {
 		System.out.println("Souhaitez-vous ajouter une image à votre message ?");
 		String oui = scanner.nextLine();
 		while(oui.matches("oui")) {
@@ -229,16 +229,15 @@ public class Menu {
 					parcours=scanner.nextLine(); 
 				}
 			}while(exist == false); 
+		
 			
-			Blob image = new Blob();
-			
-			ImageDAO.Create_Image(em, message, image, parcours);
+			ImageDAO.Create_Image(em, message,parcours);
 			System.out.println("Votre image à bien été ajouté !");
 			
 			System.out.println("Voulez vous ajouter une autre image à votre message ?");
 			oui = scanner.nextLine();
 		}
-	}*/
+	}
 	
 	/**
 	 * 

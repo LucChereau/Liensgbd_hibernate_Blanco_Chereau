@@ -2,10 +2,11 @@ package Hibernate;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.Serializable;
 
 import javax.persistence.*;
 @Entity 
-public class Image {
+public class Image implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id_Image; 
@@ -23,7 +24,7 @@ public class Image {
 	
 	public Image(String Lien_serveur, Message m) { 
 		this.Lien_serveur=Lien_serveur; 
-		File file = new File("C:\test.png");
+		File file = new File(Lien_serveur);
 		byte[] imageData = new byte[(int) file.length()];
 		try {
 		    FileInputStream fileInputStream = new FileInputStream(file);
