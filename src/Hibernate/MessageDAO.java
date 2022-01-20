@@ -47,10 +47,11 @@ public class MessageDAO {
 		}
 	}
 	
-	public static Message GetMessage_from_title(EntityManager em, String titre) {
-		String hql = "from Message m where m.titre = :titre";
+	public static Message GetMessage_from_title(EntityManager em, String titre, Utilisateur u) {
+		String hql = "from Message m where m.titre = :titre AND m.u= :utilisateur";
 		Query q = em.createQuery(hql);
 		q.setParameter("titre", titre);
+		q.setParameter("utilisateur", u); 
 		List<Message> result = q.getResultList(); 
 		if(result.size()==0) {
 			return null; 

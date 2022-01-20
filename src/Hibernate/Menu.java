@@ -160,7 +160,7 @@ public class Menu {
 		texte=scanner.nextLine(); 
 		
 		MessageDAO.Create_Message(em, utilisateur, titre, texte, date);
-		Message message = MessageDAO.GetMessage_from_title(em, titre);
+		Message message = MessageDAO.GetMessage_from_title(em, titre,utilisateur);
 		Menu_Create_Lien(em, utilisateur, message);
 		Menu_Create_Image(em, utilisateur, message);
 		Menu_Create_Mot_Cle(em, utilisateur, message);
@@ -243,14 +243,14 @@ public class Menu {
 		System.out.println("Veuillez saisir le titre du message que vous voulez modifier :"); 
 		titre=scanner.nextLine(); 
 		
-		message = MessageDAO.GetMessage_from_title(em, titre);
+		message = MessageDAO.GetMessage_from_title(em, titre,utilisateur);
 		
 		while(verif == false) {
 			if (message == null) {
 				System.out.println("Aucun de vos messages ne possède ce titre, veuillez saisir un titre valide :"); 
 				titre=scanner.nextLine(); 
 				
-				message = MessageDAO.GetMessage_from_title(em, titre);
+				message = MessageDAO.GetMessage_from_title(em, titre,utilisateur);
 			} else {
 				verif = true;
 			}
