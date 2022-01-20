@@ -598,22 +598,7 @@ public class Menu {
 		switch(choix) {
 		case 1:
 			List<Message> liste_message = MessageDAO.get_All_Message(em);
-			
-			for (Message message : liste_message){
-				
-				System.out.println("Titre : "+message.getTitre());
-				System.out.println("Message : "+message.getTexte());
-				System.out.println("Date de post : "+message.getDate_de_post());
-				
-				for(Lien lien : message.getListe_Lien()) {
-					System.out.println("Lien : "+lien.getAdresse_Lien());
-					System.out.println("Description : "+lien.getTexte());
-				}
-				
-				for(Image image : message.getListe_Image()) {
-					
-				}
-			}
+			Affichage_Message(em, liste_message);
 			break;
 		case 2:
 			break;
@@ -627,6 +612,20 @@ public class Menu {
 	}
 	
 	public static void Affichage_Message(EntityManager em, List<Message> liste_message) {
-		
+		for (Message message : liste_message){
+			
+			System.out.println("Titre : "+message.getTitre());
+			System.out.println("Message : "+message.getTexte());
+			System.out.println("Date de post : "+message.getDate_de_post());
+			
+			for(Lien lien : message.getListe_Lien()) {
+				System.out.println("Lien : "+lien.getAdresse_Lien());
+				System.out.println("Description : "+lien.getTexte());
+			}
+			
+			for(Image image : message.getListe_Image()) {
+				
+			}
+		}
 	}
 }

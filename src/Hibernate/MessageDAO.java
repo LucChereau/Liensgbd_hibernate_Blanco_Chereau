@@ -3,10 +3,6 @@ package Hibernate;
 import java.util.*;
 import javax.persistence.*;
 
-import com.test.jpa.EntityManager;
-import com.test.jpa.Person;
-import com.test.jpa.Query;
-
 public class MessageDAO {
 	public static void Create_Message(EntityManager em, Utilisateur u, String titre, String texte, Date Date_de_post) {
 		Message m=new Message(titre,texte,Date_de_post,u); 
