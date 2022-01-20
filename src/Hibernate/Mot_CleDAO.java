@@ -31,4 +31,19 @@ public class Mot_CleDAO {
 			em.getTransaction().commit();
 		}
 	}
+	
+	public static void Modify_Contenu_mot_cle(EntityManager em, Message m,Mot_Cle m_c, String new_Contenu ) {
+		if(Verify_Mot_Cle_from_Message(m,m_c)==true) {
+			em.getTransaction().begin();
+			em.persist(m_c);
+			m_c.setContenu_mot_cle(new_Contenu);
+			String hql="Update Mot_Cle mc SET Contenu_mot_cle = :Contenu WHERE mc.id= :id"; 
+			Query q=em.createQuery(hql); 
+			q.setParameter("Contenu", m_c.getContenu_mot_cle()); 
+			q.setParameter("id", m_c.getId()); 
+			q.executeUpdate();
+			em.getTransaction().commit();
+		}
+		
+	}
 }
