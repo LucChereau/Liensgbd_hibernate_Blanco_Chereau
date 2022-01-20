@@ -481,6 +481,7 @@ public class Menu {
 	//pas fait
 	public static void Menu_Modify_Image(EntityManager em, Utilisateur utilisateur, Message message) {
 		System.out.println("Souhaitez-vous modifier, supprimer ou ajouter une image à votre message ?");
+		scanner.nextLine();
 		String oui = scanner.nextLine();
 		while(oui.matches("oui")) {
 			System.out.println("-------------------------------"); 
