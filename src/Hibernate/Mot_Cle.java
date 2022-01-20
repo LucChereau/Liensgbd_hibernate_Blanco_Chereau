@@ -17,6 +17,14 @@ public class Mot_Cle {
 		this.m=m; 
 	}
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getContenu_mot_cle() {
 		return Contenu_mot_cle;
 	}
