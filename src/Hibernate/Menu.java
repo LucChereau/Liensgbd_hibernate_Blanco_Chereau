@@ -332,7 +332,8 @@ public class Menu {
 		}
 		Scanner scan_boucle = new Scanner(System .in );
 		System.out.println("Voulez-vous modifier le message ?");
-		while(scan_boucle.nextLine().matches("oui")) {
+		String oui = scan_boucle.nextLine();
+		while(oui.matches("oui")) {
 			System.out.println("-------------------------------"); 
 			System.out.println("1. Modifier le Titre"); 
 			System.out.println("2. Modifier le corps du message"); 
@@ -381,6 +382,7 @@ public class Menu {
 		           break;
 			}
 			System.out.println("Souhaitez vous continuer a modifier le message ? ");
+			oui=scan_boucle.nextLine();
 		}
 		
 		System.out.println("Votre message à bien été modifié");
