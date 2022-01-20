@@ -10,7 +10,7 @@ public class Image implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id_Image; 
-	
+	@Lob
 	private byte[] Contenu_Image; 
 	
 	private String Lien_serveur; 
