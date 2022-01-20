@@ -79,9 +79,9 @@ public class MessageDAO {
 			em.getTransaction().begin();
 			em.persist(m);
 			m.setTexte(new_Texte);
-			String hql="Update Message m SET texte = :titre WHERE m.id= :id"; 
+			String hql="Update Message m SET texte = :texte WHERE m.id= :id"; 
 			Query q=em.createQuery(hql); 
-			q.setParameter("titre", m.getTitre()); 
+			q.setParameter("texte", m.getTexte()); 
 			q.setParameter("id", m.getId()); 
 			q.executeUpdate();
 			em.getTransaction().commit();
