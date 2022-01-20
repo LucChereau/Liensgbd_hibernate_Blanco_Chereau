@@ -1,5 +1,7 @@
 package Hibernate;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -38,4 +40,18 @@ public class ImageDAO {
 			em.getTransaction().commit();
 		}
 	}
+	
+	public static Image GetImage_from_Adresse_serveur(EntityManager em,String Adresse_serveur, Message m ) {
+		String hql = "from Image I where I.Lien_serveur = :lien_serv AND I.m= :message";
+		Query q = em.createQuery(hql);
+		q.setParameter("lien_serv", Adresse_serveur);
+		q.setParameter("message", m); 
+		List<Image> result = q.getResultList(); 
+			if(result.size()==0) {
+				return null; 
+			}
+			else {
+				return result.get(0);
+			}
+		}
 }
