@@ -255,7 +255,7 @@ public class Menu {
 			String mot_cle = scanner.nextLine();
 			boolean exist = false;
 			do  {
-				if(Mot_CleDAO.get(em, mot_cle, message) != null) {
+				if(Mot_CleDAO.GetMot_Cle_from_Contenu(em, mot_cle, message) != null) {
 					exist = false;
 				} else {
 					exist = true;
