@@ -493,13 +493,52 @@ public class Menu {
 			int choix = scanner.nextInt();
 			switch(choix) {
 			case 1:
-				Menu_Create_Message(em, utilisateur);
+				System.out.println("Saisir le lien de l'image que vous voulez modifier :");
+		    	String lien_image1=scanner.nextLine(); 
+		    	boolean exist1 = false;
+				do  {
+					if(ImageDAO.GetImage_from_Adresse_serveur(em, lien_image1, message) == null) {
+						exist1 = false;
+					} else {
+						exist1 = true;
+					}
+					if(exist1 == false) {
+						System.out.println("Ce lien n'est pas utilisé dans votre message,"
+								+ " veuillez en renseigner un nouveau :");
+						lien_image1=scanner.nextLine(); 
+					}
+				}while(exist1 == false);
+		    	
+		    	Image image1 = ImageDAO.GetImage_from_Adresse_serveur(em, lien_image1, message);
+		    	
+		    	System.out.println("Saisir le nouveau lien de l'image :");
+		    	String lien_new_image=scanner.nextLine(); 
+		    	
+		    	ImageDAO.Modify_Lien_serveur_Image(em, message, image1, lien_new_image );
 				break;
 			case 2:
-				Menu_Supprimer_Message(em, utilisateur);
+				System.out.println("Saisir le lien de l'image que vous voulez supprimer :");
+		    	String lien_image2=scanner.nextLine(); 
+		    	boolean exist2 = false;
+				do  {
+					if(ImageDAO.GetImage_from_Adresse_serveur(em, lien_image2, message) == null) {
+						exist2 = false;
+					} else {
+						exist2 = true;
+					}
+					if(exist2 == false) {
+						System.out.println("Ce lien n'est pas utilisé dans votre message,"
+								+ " veuillez en renseigner un nouveau :");
+						lien_image2=scanner.nextLine(); 
+					}
+				}while(exist2 == false);
+		    	
+		    	Image image2 = ImageDAO.GetImage_from_Adresse_serveur(em, lien_image2, message);
+		    	
+		    	ImageDAO.Supprimer_Image(em, message, image2);
 				break;
 			case 3:
-				Menu_Modifier_Message(em, utilisateur);
+				Menu_Create_Image(em, utilisateur, message);
 				break;
 			default:
 				System.out.println("Choix incorrect");
@@ -598,12 +637,15 @@ public class Menu {
 		int choix = scanner.nextInt();
 		switch(choix) {
 		case 1:
-			List<Message> liste_message = MessageDAO.get_All_Message(em);
-			Affichage_Message(em, liste_message);
+			List<Message> liste_all_message = MessageDAO.get_All_Message(em);
+			Affichage_Message(em, liste_all_message);
 			break;
 		case 2:
+			List<Message> liste_ses_message = MessageDAO.get_Message_Utilisateur(em, utilisateur);
+			Affichage_Message(em, liste_ses_message);
 			break;
 		case 3:
+			
 			break;
 		case 4:
 			break;
@@ -625,7 +667,7 @@ public class Menu {
 			}
 			
 			for(Image image : message.getListe_Image()) {
-				
+				System.out.println("Lien de l'image : "+image.getLien_serveur());
 			}
 		}
 	}

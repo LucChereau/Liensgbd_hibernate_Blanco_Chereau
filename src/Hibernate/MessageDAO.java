@@ -95,4 +95,14 @@ public class MessageDAO {
 		
 		return list;
 	}
+	
+	public static List<Message> get_Message_Utilisateur(EntityManager em, Utilisateur utilisateur){
+		Query query = em.createQuery("from Message"); 
+		
+		List<Message> list = query.getResultList();
+		
+		return list;
+	}
+	
+	
 }
