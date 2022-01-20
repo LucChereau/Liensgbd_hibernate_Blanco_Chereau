@@ -14,6 +14,18 @@ public class Image {
 	private String Lien_serveur; 
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Message m;
+	
+	public Image() {
+		Contenu_Image=null; 
+		Lien_serveur=null; 
+	}
+	
+	public Image(BlobType Contenu_Image, String Lien_serveur, Message m) {
+		this.Contenu_Image=Contenu_Image; 
+		this.Lien_serveur=Lien_serveur; 
+		this.m=m; 
+	}
+	
 	public int getId_Image() {
 		return id_Image;
 	}
