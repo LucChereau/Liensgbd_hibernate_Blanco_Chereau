@@ -285,7 +285,7 @@ public class Menu {
 		   
 		       case 2:
 		    	   System.out.println("Saisir le nouveau corps du message");
-		    	   String texte_modif=scanner.nextLine(); 
+		    	   String texte_modif=scan_boucle.nextLine(); 
 		           MessageDAO.Modifier_Corps_Message(em, message, utilisateur, texte_modif);
 		           System.out.println("Le corp du message a été modifié"); 
 		           break;
