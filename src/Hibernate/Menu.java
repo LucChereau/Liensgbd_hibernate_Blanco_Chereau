@@ -160,7 +160,46 @@ public class Menu {
 		texte=scanner.nextLine(); 
 		
 		MessageDAO.Create_Message(em, utilisateur, titre, texte, date);
+		Message message = MessageDAO.GetMessage_from_title(em, titre);
+		Menu_Create_Lien(em, utilisateur, message);
+		Menu_Create_Image(em, utilisateur, message);
+		Menu_Create_Mot_Cle(em, utilisateur, message);
 		System.out.println("Votre message à bien été créé !"); 
+	}
+	
+	/**
+	 * 
+	 * @param em
+	 * @param utilisateur
+	 * @param message
+	 */
+	public static void Menu_Create_Lien(EntityManager em, Utilisateur utilisateur, Message message) {
+		System.out.println("Souhaitez-vous ajouter un lien à votre message ?");
+		String oui = scanner.nextLine();
+		boolean verif_create = true;
+		while(oui == "oui") {
+			
+		}
+	}
+	
+	/**
+	 * 
+	 * @param em
+	 * @param utilisateur
+	 * @param message
+	 */
+	public static void Menu_Create_Image(EntityManager em, Utilisateur utilisateur, Message message) {
+		
+	}
+	
+	/**
+	 * 
+	 * @param em
+	 * @param utilisateur
+	 * @param message
+	 */
+	public static void Menu_Create_Mot_Cle(EntityManager em, Utilisateur utilisateur, Message message) {
+		
 	}
 	
 	/**
@@ -222,9 +261,9 @@ public class Menu {
 			System.out.println("-------------------------------"); 
 			System.out.println("1. Modifier le Titre"); 
 			System.out.println("2. Modifier le corps du message"); 
-			System.out.println("3.Modifier les liens"); 
-			System.out.println("4.Modifier les Images"); 
-			System.out.println("5.Modifier les Mots_clés"); 
+			System.out.println("3. Modifier les liens"); 
+			System.out.println("4. Modifier les Images"); 
+			System.out.println("5. Modifier les Mots_clés"); 
 			System.out.println("-------------------------------"); 
 			int choix=scanner.nextInt(); 
 			   switch(choix){
@@ -247,7 +286,7 @@ public class Menu {
 		       case 2:
 		    	   System.out.println("Saisir le nouveau corps du message");
 		    	   String texte_modif=scanner.nextLine(); 
-		           //MessageDAO.Modifier_Texte_Message(em, message, utilisateur, texte_modif);
+		           MessageDAO.Modifier_Corps_Message(em, message, utilisateur, texte_modif);
 		           System.out.println("Le corp du message a été modifié"); 
 		           break;
 		   
@@ -271,6 +310,38 @@ public class Menu {
 		}
 		
 		System.out.println("Votre message à bien été modifié");
+	}
+	
+	public static void Menu_Modify_Lien(EntityManager em, Utilisateur utilisateur, Message message) {
+		System.out.println("Souhaitez-vous modifier, supprimer ou ajouter un lien à votre message ?");
+		while(scanner.nextLine().matches("oui")) {
+			System.out.println("-------------------------------"); 
+			System.out.println("1. Modifier le lien"); 
+			System.out.println("2. Modifier le descriptif"); 
+			System.out.println("3. Supprimer un lien"); 
+			System.out.println("4. Ajouter un lien"); 
+			System.out.println("-------------------------------"); 
+			
+			int choix = scanner.nextInt();
+			switch(choix) {
+			case 1:
+				Menu_Create_Message(em, utilisateur);
+				break;
+			case 2:
+				Menu_Supprimer_Message(em, utilisateur);
+				break;
+			case 3:
+				Menu_Modifier_Message(em, utilisateur);
+				break;
+			case 4:
+				Affichage(em, utilisateur);
+				break;
+			default:
+				System.out.println("Choix incorrect");
+				break;
+			}
+			System.out.println("Souhaitez-vous rester dans le menu ?"); 
+		}
 	}
 	
 	/**
