@@ -118,4 +118,12 @@ public class MessageDAO {
 		
 		return list;
 	}
+	public static List<Message> get_Message_Par_Mot_Cle(EntityManager em, Utilisateur utilisateur, String mot_cle){
+		String hql = "select m from Mot_Cle mc where mc.Contenu_mot_cle = :mot_cle";
+		Query q = em.createQuery(hql);
+		q.setParameter("mot_cle", mot_cle);
+		List<Message>list = q.getResultList();
+		
+		return list;
+	}
 }

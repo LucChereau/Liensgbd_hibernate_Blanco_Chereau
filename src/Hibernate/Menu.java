@@ -3,6 +3,7 @@ package Hibernate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -657,7 +658,43 @@ public class Menu {
 			Affichage_Message(em, liste_message_par_date);
 			break;
 		case 4:
+			ArrayList<String> liste_mot_cle = new ArrayList<String>();
+			System.out.println("Donnez le premier mot clé :");
+			scanner.nextLine();
+			String mot1 = scanner.nextLine();
+			List<Message> messages_corres = MessageDAO.get_Message_Par_Mot_Cle(em, utilisateur, mot1);
+			List<Message> messages_corres_tmp = new ArrayList<Message>();
+			List<Message> tmp = new ArrayList<Message>();
+			liste_mot_cle.add(mot1);
+			String mot_boucle;
+			String oui = "";
+			boolean autre = true;
+			while(autre == true) {
+				System.out.println("Avez-vous un mot clé supplémentaire à donner ?");
+				oui = scanner.nextLine();
+				if (oui.matches("oui")) {
+					System.out.println("Donnez un nouveau mot clé :");
+					mot_boucle = scanner.nextLine();
+					liste_mot_cle.add(mot_boucle);
+					tmp = MessageDAO.get_Message_Par_Mot_Cle(em, utilisateur, mot_boucle);
+					for(int j = 0; j < tmp.size(); j++) {
+						if(messages_corres.contains(tmp.get(j))) {
+							messages_corres_tmp.add(tmp.get(j));
+						}
+					}
+					messages_corres.clear();
+					messages_corres.addAll(messages_corres_tmp);
+				} else {
+					autre = false;
+				}
+			}
 			
+			if(messages_corres.size() == 0) {
+				System.out.println("Aucun message ne correspond à la liste des mots clés sélectionnés !");
+				Menu_Affichage_Message(em, utilisateur);
+			} else {
+				Affichage_Message(em, messages_corres);
+			}
 			break;
 		default:
 			break;
