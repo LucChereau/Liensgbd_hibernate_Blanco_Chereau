@@ -189,7 +189,7 @@ public class Menu {
 					exist = true;
 				}
 				if(exist == false) {
-					System.out.println("Le lien de votre message est déjà utilisé dans votre message,"
+					System.out.println("Ce lien est déjà utilisé dans votre message,"
 							+ " veuillez en renseigner un nouveau :");
 					lien_txt=scanner.nextLine(); 
 				}
@@ -217,7 +217,22 @@ public class Menu {
 		while(oui.matches("oui")) {
 			System.out.println("Veuillez saisir le parcours serveur pour l'image :");
 			String parcours = scanner.nextLine();
+			boolean exist = false;
+			do  {
+				if(ImageDAO.get(em, parcours, message) != null) {
+					exist = false;
+				} else {
+					exist = true;
+				}
+				if(exist == false) {
+					System.out.println("Cette image est déjà utilisé dans votre message,"
+							+ " veuillez en renseigner une nouvelle :");
+					parcours=scanner.nextLine(); 
+				}
+			}while(exist == false); 
+			
 			BlobType image = new BlobType();
+			
 			ImageDAO.Create_Image(em, message, image, parcours);
 			System.out.println("Votre image à bien été ajouté !");
 			
@@ -238,6 +253,20 @@ public class Menu {
 		while(oui.matches("oui")) {
 			System.out.println("Veuillez saisir un mot clé :");
 			String mot_cle = scanner.nextLine();
+			boolean exist = false;
+			do  {
+				if(Mot_CleDAO.get(em, mot_cle, message) != null) {
+					exist = false;
+				} else {
+					exist = true;
+				}
+				if(exist == false) {
+					System.out.println("Ce mot_clé est déjà utilisé dans votre message,"
+							+ " veuillez en renseigner un nouveau :");
+					mot_cle=scanner.nextLine(); 
+				}
+			}while(exist == false); 
+			
 			Mot_CleDAO.Create_Mot_Cle(em, mot_cle, message);
 			System.out.println("Votre mot-clé à bien été ajouté !");
 			
