@@ -20,7 +20,7 @@ public class LienDAO {
 		return t; 
 	}
 	
-	public static void Modify_Adresse_Lien() {
+	public static void Modify_Adresse_Lien(EntityManager em, Lien l, Message m, String new_Adresse_Lien) {
 		
 	}
 	
