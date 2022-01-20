@@ -219,7 +219,7 @@ public class Menu {
 			String parcours = scanner.nextLine();
 			boolean exist = false;
 			do  {
-				if(ImageDAO.get(em, parcours, message) != null) {
+				if(ImageDAO.GetImage_from_Adresse_serveur(em, parcours, message) != null) {
 					exist = false;
 				} else {
 					exist = true;
@@ -401,23 +401,72 @@ public class Menu {
 			case 1:
 				System.out.println("Saisir le lien que vous voulez modifier :");
 		    	String ancien_lien=scan_boucle.nextLine(); 
+		    	
+		    	boolean exist = false;
+				do  {
+					if(LienDAO.GetLien_from_Adresse_Lien(em, ancien_lien, message) == null) {
+						exist = false;
+					} else {
+						exist = true;
+					}
+					if(exist == false) {
+						System.out.println("Ce lien n'est pas utilisé dans votre message,"
+								+ " veuillez en renseigner un nouveau :");
+						ancien_lien=scanner.nextLine(); 
+					}
+				}while(exist == false);
+		    	
+				Lien lien = LienDAO.GetLien_from_Adresse_Lien(em, ancien_lien, message);
+				
 		    	System.out.println("Saisir le nouveau lien que vous voulez ajouter :");
 		    	String new_lien=scan_boucle.nextLine(); 
-		        LienDAO.Modifier_Lien(em, message, utilisateur, texte_modif);
+		        LienDAO.Modify_Adresse_Lien(em, lien, message, new_lien);
 		        System.out.println("Le lien a été modifié"); 
 				break;
 			case 2:
 				System.out.println("Saisir le lien que vous voulez modifier :");
-		    	String lien=scan_boucle.nextLine(); 
+		    	String lien_txt2 = scan_boucle.nextLine(); 
+		    	boolean exist2 = false;
+				do  {
+					if(LienDAO.GetLien_from_Adresse_Lien(em, lien_txt2, message) == null) {
+						exist2 = false;
+					} else {
+						exist2 = true;
+					}
+					if(exist2 == false) {
+						System.out.println("Ce lien n'est pas utilisé dans votre message,"
+								+ " veuillez en renseigner un nouveau :");
+						lien_txt2=scanner.nextLine(); 
+					}
+				}while(exist2 == false);
+		    	
+				Lien lien2 = LienDAO.GetLien_from_Adresse_Lien(em, lien_txt2, message);
+				
 		    	System.out.println("Saisir le nouveau descriptif que vous voulez ajouter :");
 		    	String new_desc=scan_boucle.nextLine(); 
-		        LienDAO.Modifier_Desc_Lien(em, message, utilisateur, texte_modif);
+		        LienDAO.Modify_Texte_Lien(em, message, lien2, new_desc);
 		        System.out.println("Le descriptif du lien a été modifié"); 
 				break;
 			case 3:
 				System.out.println("Saisir le lien que vous voulez supprimer :");
-		    	String lien=scan_boucle.nextLine(); 
-		    	LienDAO.Supprimer_Lien(em, message, null);
+		    	String lien_txt3=scan_boucle.nextLine(); 
+		    	boolean exist3 = false;
+				do  {
+					if(LienDAO.GetLien_from_Adresse_Lien(em, lien_txt3, message) == null) {
+						exist3 = false;
+					} else {
+						exist3 = true;
+					}
+					if(exist3 == false) {
+						System.out.println("Ce lien n'est pas utilisé dans votre message,"
+								+ " veuillez en renseigner un nouveau :");
+						lien_txt3=scanner.nextLine(); 
+					}
+				}while(exist3 == false);
+		    	
+		    	Lien lien3 = LienDAO.GetLien_from_Adresse_Lien(em, lien_txt3, message);
+		    	
+		    	LienDAO.Supprimer_Lien(em, message, lien3);
 				break;
 			case 4:
 				Menu_Create_Lien(em, utilisateur, message);
