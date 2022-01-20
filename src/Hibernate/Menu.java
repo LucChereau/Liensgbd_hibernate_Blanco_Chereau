@@ -182,6 +182,7 @@ public class Menu {
 	 */
 	public static void Menu_Create_Lien(EntityManager em, Utilisateur utilisateur, Message message) {
 		System.out.println("Souhaitez-vous ajouter un lien à votre message ?");
+		scanner.nextLine();
 		String oui = scanner.nextLine();
 		while(oui.matches("oui")) {
 			System.out.println("Veuillez saisir l'adresse URL de votre lien :");
@@ -218,6 +219,7 @@ public class Menu {
 	 */
 	public static void Menu_Create_Image(EntityManager em, Utilisateur utilisateur, Message message) {
 		System.out.println("Souhaitez-vous ajouter une image à votre message ?");
+		scanner.nextLine();
 		String oui = scanner.nextLine();
 		while(oui.matches("oui")) {
 			System.out.println("Veuillez saisir le parcours serveur pour l'image :");
@@ -253,6 +255,7 @@ public class Menu {
 	 */
 	public static void Menu_Create_Mot_Cle(EntityManager em, Utilisateur utilisateur, Message message) {
 		System.out.println("Souhaitez-vous ajouter un mot_clé à votre message ?");
+		scanner.nextLine();
 		String oui = scanner.nextLine();
 		while(oui.matches("oui")) {
 			System.out.println("Veuillez saisir un mot clé :");
@@ -318,6 +321,7 @@ public class Menu {
 		String titre;
 		Message message;
 		System.out.println("Veuillez saisir le titre du message que vous voulez modifier :"); 
+		scanner.nextLine(); 
 		titre=scanner.nextLine(); 
 		
 		message = MessageDAO.GetMessage_from_title(em, titre,utilisateur);
@@ -390,6 +394,7 @@ public class Menu {
 	
 	public static void Menu_Modify_Lien(EntityManager em, Utilisateur utilisateur, Message message) {
 		System.out.println("Souhaitez-vous modifier, supprimer ou ajouter un lien à votre message ?");
+		scanner.nextLine();
 		String oui = scanner.nextLine();
 		while(oui.matches("oui")) {
 			System.out.println("-------------------------------"); 
@@ -557,6 +562,7 @@ public class Menu {
 	
 	public static void Menu_Modify_Mot_Cle(EntityManager em, Utilisateur utilisateur, Message message) {
 		System.out.println("Souhaitez-vous modifier, supprimer ou ajouter un mot-clé à votre message ?");
+		scanner.nextLine();
 		String oui = scanner.nextLine();
 		while(oui.matches("oui")) {
 			System.out.println("-------------------------------"); 
